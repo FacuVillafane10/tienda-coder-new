@@ -15,7 +15,6 @@ function NavBar({ count, message, setCount }) {
           </Nav>
         </Container>
       </Navbar>
-      {/* Componente que recibe el mensaje como prop */}
       <ItemListContainer message={message} />
     </>
   );
