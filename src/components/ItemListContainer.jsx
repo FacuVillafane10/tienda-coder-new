@@ -1,22 +1,16 @@
-// src/components/ItemListContainer.jsx
 import React from 'react';
 
-function ItemListContainer({ message }) {
-  const items = [
-    { id: 1, name: 'Producto 1', price: '$20' },
-    { id: 2, name: 'Producto 2', price: '$30' },
-    { id: 3, name: 'Producto 3', price: '$40' },
-  ];
-
+function ItemListContainer({ message, comidas, handleAddToCart }) {
   return (
     <div>
       <h2>{message}</h2>
       <div className="item-list">
-        {items.map((item) => (
-          <div key={item.id} className="item-card">
-            <h3>{item.name}</h3>
-            <p>{item.price}</p>
-            <button>Agregar al carrito</button>
+        {comidas.map((comida) => (
+          <div key={comida.id} className="item-card">
+            <img src={comida.foto} alt={comida.nombre} width="150" height="150" />
+            <h3>{comida.nombre}</h3>
+            <p>{comida.descripcion}</p>
+            <button onClick={handleAddToCart}>Agregar al carrito</button>
           </div>
         ))}
       </div>
