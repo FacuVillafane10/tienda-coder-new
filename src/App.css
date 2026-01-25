@@ -1,4 +1,22 @@
-body {
+/* index.css o App.css */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#root {
+  
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+
+body { 
+
   background-color: #34996f;
   margin: 0;
   padding: 0;
@@ -7,21 +25,40 @@ body {
   scrollbar-width: auto;
 }
 
+/* Aseguramos que el box-sizing no afecte el diseño */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 .item-list {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
   justify-content: center;
+  padding: 20px; /* Aseguramos que haya espacio alrededor de los items */
 }
 
 .item-card {
   background-color: #fff;
   border-radius: 8px;
   padding: 15px;
-  width: 200px;
+  width: 100%;
+  max-width: 250px;
   text-align: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Esto asegura que los elementos estén distribuidos verticalmente */
+  height: 100%; /* Hace que la tarjeta ocupe toda la altura disponible */
+}
+
+/* Efecto al pasar el mouse sobre la tarjeta */
+.item-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
 }
 
 .item-card img {
@@ -29,12 +66,19 @@ body {
   height: 200px; /* Fijamos una altura específica */
   object-fit: cover; /* Asegura que la imagen ocupe el contenedor sin deformarse */
   border-radius: 5px;
+  transition: opacity 0.3s ease;
+}
+
+/* Agregamos un efecto al pasar el mouse sobre la imagen */
+.item-card img:hover {
+  opacity: 0.8;
 }
 
 .item-card h3 {
   font-size: 1.2em;
   color: #333;
   margin: 10px 0;
+  font-weight: 600; /* Hacemos el título más destacado */
 }
 
 .item-card p {
@@ -46,9 +90,10 @@ button {
   background-color: #34996f;
   color: white;
   border: none;
-  padding: 8px 16px;
+  padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
@@ -58,8 +103,10 @@ button:hover {
 /* Media Query para hacer que las imágenes se ajusten en pantallas más pequeñas */
 @media (max-width: 768px) {
   .item-card {
-    width: 150px; /* Reducimos el tamaño en pantallas más pequeñas */
+    width: 100%; /* Las tarjetas ocuparán el 100% del ancho disponible */
+    max-width: none; /* Elimina el max-width para que las tarjetas se adapten */
   }
+
   .item-card img {
     height: 150px; /* Ajustamos la altura de las imágenes */
   }
@@ -70,7 +117,13 @@ button:hover {
   font-size: 20px;
 }
 
-span.text-white.mr-2{
+span.text-white.mr-2 {
   color: #61ac7e;
   font-size: 20px;
+}
+
+/* Mejorar el contraste y la accesibilidad */
+button:focus {
+  outline: 2px solid #61ac7e;
+  outline-offset: 4px;
 }

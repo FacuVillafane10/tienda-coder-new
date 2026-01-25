@@ -3,7 +3,7 @@ import React from 'react';
 function ItemListContainer({ message, comidas, handleAddToCart }) {
   return (
     <div>
-      <h2>{message}</h2>
+      <h3 className='d-flex justify-content-center '>{message}</h3>
       <div className="item-list">
         {comidas.map((comida) => (
           <div key={comida.id} className="item-card">

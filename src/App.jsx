@@ -9,7 +9,7 @@ import {BrowserRouter,Routes, Route} from 'react-router-dom';
 
 function App() {
   const [count, setCount] = useState(0);  
-  const message = "Bienvenido a Paula Foods";
+  const message = "Bienvenidos a Paula Foods";
 
   const handleAddToCart = () => {
     setCount(count + 1); 
@@ -18,11 +18,11 @@ function App() {
   return (
     <BrowserRouter>
       <NavBar count={count} message={message} />
+      <CartWidget count={count} message={message} />     
       <Routes>
         <Route path='/' element={<ItemListContainer message="Lista de productos disponibles" comidas={comidas} handleAddToCart={handleAddToCart} />} />
             <Route path='*' element={<Error/>}/>     
-      </Routes>
-      <CartWidget count={count} message={message} />       
+      </Routes>  
       
     </BrowserRouter>
   );
