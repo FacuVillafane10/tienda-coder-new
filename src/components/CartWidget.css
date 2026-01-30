@@ -1,0 +1,36 @@
+/* components/CartWidget.css */
+
+.cart-empty {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cart-item-image {
+  height: 150px;
+  width: 100%;
+  object-fit: cover;
+}
+
+.cart-summary {
+  position: sticky;
+  top: 20px;
+}
+
+.quantity-control {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.quantity-control .btn {
+  min-width: 35px;
+}
+
+@media (max-width: 768px) {
+  .cart-summary {
+    position: static;
+    margin-top: 2rem;
+  }
+}
