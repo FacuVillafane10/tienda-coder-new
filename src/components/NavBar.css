@@ -33,14 +33,7 @@
   transform: translateY(-2px);
 }
 
-/* Estilos para el logo */
-.navbar-logo {
-  width: 40px;
-  height: 40px;
-  object-fit: contain;
-  filter: brightness(1.1);
-  transition: transform 0.3s ease;
-}
+
 
 .navbar-brand-custom:hover .navbar-logo {
   transform: rotate(360deg) scale(1.1);
@@ -151,4 +144,693 @@
 .navbar-logo{
     width: 185px;
     height: auto;
+}
+
+.navbar-custom {
+  background-color: #fff; /* Ajusta el fondo del navbar */
+  padding: 10px 20px;
+}
+
+.navbar-logo {
+  width: 40px;
+  height: auto;
+  margin-right: 10px;
+}
+
+.nav-link-custom {
+  color: #333;
+  text-decoration: none;
+  margin: 0 10px;
+  position: relative;
+}
+
+.nav-link-custom.active {
+  font-weight: bold;
+}
+
+.cart-badge {
+  position: absolute;
+  top: -5px;
+  right: -10px;
+  background-color: red;
+  color: white;
+  font-size: 12px;
+  padding: 5px 8px;
+  border-radius: 50%;
+}
+
+
+.navbar-custom {
+  background-color: #fff; /* Ajusta el fondo del navbar */
+  padding: 10px 20px;
+}
+
+.navbar-logo {
+  width: 40px;  /* Ajusta el tamaño del logo */
+  height: auto;
+  margin-right: 10px;
+}
+
+.nav-link-custom {
+  color: #333;
+  text-decoration: none;
+  margin: 0 10px;
+  position: relative;
+}
+
+.nav-link-custom.active {
+  font-weight: bold;
+}
+
+.cart-badge {
+  position: absolute;
+  top: -5px;
+  right: -10px;
+  background-color: red;
+  color: white;
+  font-size: 12px;
+  padding: 5px 8px;
+  border-radius: 50%;
+}
+.navbar-custom {
+  background-color: #fff;
+  padding: 10px 20px;
+}
+
+.navbar-logo {
+  width: 40px;
+  height: auto;
+  margin-right: 10px;
+}
+
+.nav-link-custom {
+  color: #333;
+  text-decoration: none;
+  margin: 0 10px;
+  position: relative;
+}
+
+.nav-link-custom.active {
+  font-weight: bold;
+}
+
+.cart-badge {
+  position: absolute;
+  top: -5px;
+  right: -10px;
+  background-color: red;
+  color: white;
+  font-size: 12px;
+  padding: 5px 8px;
+  border-radius: 50%;
+}
+
+/* Estilo del dropdown */
+.dropdown-toggle::after {
+  content: none; /* Oculta el icono de flecha del dropdown */
+}
+
+.dropdown-menu {
+  min-width: 200px; /* Ajusta el tamaño del dropdown */
+}
+
+.dropdown-item {
+  padding: 10px;
+  font-size: 14px;
+}
+/* Estilo general para todos los botones */
+.btn {
+  border-radius: 20px; /* Bordes redondeados */
+  padding: 10px 20px; /* Espaciado interno */
+  font-weight: bold; /* Texto en negrita */
+  text-align: center; /* Alineación del texto */
+  display: inline-block; /* Para que los botones se alineen correctamente */
+  cursor: pointer; /* Para dar la sensación de clickeable */
+  transition: background-color 0.3s ease; /* Transición suave al pasar el mouse */
+}
+
+/* Estilo específico para los botones "Agregar al carrito" y "Ver más sobre el Producto" */
+.btn-primary {
+  background-color: #007bff; /* Color de fondo similar al carrito */
+  color: white; /* Color del texto */
+  border: none; /* Sin bordes */
+}
+
+.btn-primary:hover {
+  background-color: #0056b3; /* Color al pasar el mouse */
+}
+
+/* Estilo para el botón "Ver más sobre el Producto" */
+.btn-secondary {
+  background-color: #6c757d; /* Color gris */
+  color: white;
+  border: none;
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268; /* Gris más oscuro al pasar el mouse */
+}
+
+/* Estilo para los botones del carrito */
+.text-bg-primary {
+  background-color: #0d6efd; /* Color azul del carrito */
+  color: white;
+}
+
+.text-bg-primary:hover {
+  background-color: #0b5ed7; /* Azul más oscuro cuando pasas el mouse */
+}
+/* Estilo general para todos los botones */
+.navbar-custom .btn {
+  border-radius: 20px; /* Bordes redondeados */
+  padding: 10px 20px; /* Espaciado interno */
+  font-weight: bold; /* Texto en negrita */
+  text-align: center; /* Alineación del texto */
+  display: inline-block; /* Para que los botones se alineen correctamente */
+  cursor: pointer; /* Para dar la sensación de clickeable */
+  transition: background-color 0.3s ease; /* Transición suave al pasar el mouse */
+}
+
+/* Estilo específico para los botones "Agregar al carrito" y "Ver más sobre el Producto" */
+.btn-primary {
+  background-color: #007bff; /* Color de fondo similar al carrito */
+  color: white; /* Color del texto */
+  border: none; /* Sin bordes */
+}
+
+.btn-primary:hover {
+  background-color: #0056b3; /* Color al pasar el mouse */
+}
+
+/* Estilo para el botón "Ver más sobre el Producto" */
+.btn-secondary {
+  background-color: #6c757d; /* Color gris */
+  color: white;
+  border: none;
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268; /* Gris más oscuro al pasar el mouse */
+}
+
+/* Estilo para los botones del carrito */
+.cart-badge {
+  position: absolute;
+  top: -5px;
+  right: -10px;
+  background-color: red;
+  color: white;
+  font-size: 12px;
+  padding: 5px 8px;
+  border-radius: 50%;
+}
+/* Estilos para el logo */
+.navbar-logo {
+  width: 180px;
+  height: auto;
+  object-fit: contain;
+  filter: brightness(1.1);
+  transition: transform 0.3s ease;
+}
+
+
+/* Estilos generales para el navbar */
+.navbar-custom {
+  background-color: #1a1a1a; /* Fondo oscuro */
+  padding: 10px 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap; /* Asegura que los elementos se ajusten */
+}
+
+.navbar-logo {
+  width: 40px;
+  height: auto;
+  margin-right: 10px;
+}
+
+.nav-link-custom {
+  color: #fff; /* Color de texto blanco */
+  text-decoration: none;
+  margin: 0 10px;
+  position: relative;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.navbar-brand-custom {
+  color: white;
+  display: flex;
+  align-items: center;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.brand-text {
+  margin-left: 10px;
+}
+
+/* Estilo para el dropdown */
+.dropdown-toggle {
+  background-color: #555; /* Fondo del botón de categorías */
+  color: white;
+  border: none;
+  padding: 10px;
+}
+
+.dropdown-menu {
+  background-color: #fff; /* Fondo blanco para el dropdown */
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+.dropdown-item {
+  font-size: 14px;
+  color: #333; /* Color oscuro para los ítems */
+}
+
+.dropdown-item:hover {
+  background-color: #f8f9fa; /* Fondo claro al pasar el mouse */
+  color: #007bff; /* Color azul en hover */
+}
+
+/* Estilo para el carrito */
+.cart-badge {
+  position: absolute;
+  top: -5px;
+  right: -10px;
+  background-color: red;
+  color: white;
+  font-size: 12px;
+  padding: 5px 8px;
+  border-radius: 50%;
+}
+
+
+/* Media query para pantallas pequeñas */
+@media (max-width: 885px) {
+  .navbar-custom {
+    flex-direction: column;  /* Los elementos se apilan verticalmente */
+    align-items: flex-start; /* Alineación a la izquierda */
+  }
+
+  .navbar-links {
+    display: flex;
+    flex-direction: column;
+    width: 100%;  /* Asegúrate de que ocupe todo el ancho */
+    align-items: flex-start;
+  }
+
+  .btn {
+    width: 100%;  /* Los botones ahora ocupan todo el ancho en pantallas pequeñas */
+    margin: 5px 0; /* Espaciado entre los botones */
+  }
+
+  .navbar-logo {
+    width: 50px;  /* Ajusta el tamaño del logo si es necesario */
+  }
+}
+
+
+/* Estilos generales para el navbar */
+.navbar-custom {
+  background-color: #1a1a1a; /* Fondo oscuro */
+  padding: 10px 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap; /* Asegura que los elementos se ajusten */
+}
+
+.navbar-logo {
+  width: 40px;
+  height: auto;
+  margin-right: 10px;
+}
+
+.nav-link-custom {
+  color: #fff; /* Color de texto blanco */
+  text-decoration: none;
+  margin: 0 10px;
+  position: relative;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.navbar-brand-custom {
+  color: white;
+  display: flex;
+  align-items: center;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.brand-text {
+  margin-left: 10px;
+}
+
+/* Estilo para los botones */
+.btn {
+  border-radius: 20px;
+  padding: 8px 20px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #0056b3; /* Fondo más oscuro en hover */
+}
+
+/* Estilo para el dropdown */
+.dropdown-toggle {
+  background-color: #365ba0; /* Fondo del botón de categorías */
+  color: white;
+  border: none;
+  padding: 10px;
+}
+
+.dropdown-menu {
+  background-color: #fff; /* Fondo blanco para el dropdown */
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+.dropdown-item {
+  font-size: 14px;
+  color: #365ba0; /* Color oscuro para los ítems */
+}
+
+.dropdown-item:hover {
+  background-color: #f8f9fa; /* Fondo claro al pasar el mouse */
+  color: #007bff; /* Color azul en hover */
+}
+
+/* Estilo para el carrito */
+.cart-badge {
+  position: absolute;
+  top: -5px;
+  right: -10px;
+  background-color: red;
+  color: white;
+  font-size: 12px;
+  padding: 5px 8px;
+  border-radius: 50%;
+}
+
+/* Media query para pantallas más pequeñas */
+@media (max-width: 885px) {
+  .navbar-custom {
+    flex-direction: column;  /* Los elementos se apilan verticalmente */
+    align-items: flex-start; /* Alineación a la izquierda */    
+  }
+
+  .navbar-links {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: flex-start;
+  }
+
+  .dropdown-toggle {
+    width: 100%; /* El botón de categorías ocupa todo el ancho en pantallas pequeñas */
+    text-align: center;
+  }
+
+  .dropdown-menu {
+    width: 100%;
+  }
+
+  .btn {
+    width: 100%;  /* Los botones ahora ocupan todo el ancho */
+    margin: 5px 0;
+  }
+
+  .navbar-logo {
+    width: 70%; /* Ajusta el tamaño del logo */
+  }
+
+  .nav-link-custom {
+    width: 100%;
+    margin: 5px 0;
+    text-align: center;
+  }
+  
+}
+
+/* Estilo general para el navbar */
+.navbar-custom {
+  background-color: #1a1a1a; /* Fondo oscuro */
+  padding: 10px 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.navbar-logo {
+  width: 40px;
+  height: auto;
+  margin-right: 10px;
+}
+
+.navbar-links {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+}
+
+.nav-link-custom {
+  color: white;
+  font-size: 16px;
+  font-weight: 500;
+  text-decoration: none;
+  margin: 0 10px;
+  position: relative;
+  padding: 10px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.nav-link-custom:hover {
+  background-color: #0056b3;
+}
+
+.btn-primary {
+  background-color: #007bff; /* Botones de color azul */
+  color: white;
+  border: none;
+  padding: 8px 20px;
+  font-size: 16px;
+  border-radius: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.dropdown-menu {
+  background-color: #fff; /* Fondo blanco para el dropdown */
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+.dropdown-item {
+  color: #333;
+  padding: 10px;
+}
+
+.dropdown-item:hover {
+  background-color: #f8f9fa;
+  color: #007bff;
+}
+
+/* Badge en el carrito */
+.cart-badge {
+  position: absolute;
+  top: -5px;
+  right: -10px;
+  background-color: red;
+  color: white;
+  font-size: 12px;
+  padding: 5px 8px;
+  border-radius: 50%;
+}
+
+/* Estilo para que se vea bien en dispositivos pequeños */
+@media (max-width: 885px) {
+  .navbar-custom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .navbar-links {
+    flex-direction: column;
+    width: 100%;
+    align-items: flex-start;
+  }
+
+  .btn {
+    width: 100%;
+    margin: 5px 0;
+  }
+}
+/* Clase común para todos los botones */
+.btn-nav {
+  padding: 8px 20px;
+  font-weight: bold;
+  font-size: 16px;
+  border-radius: 20px;
+  transition: background-color 0.3s ease;
+  color: #fff;
+  background-color: #007bff; /* Fondo azul */
+  border: none;
+}
+
+.btn-nav:hover {
+  background-color: #0056b3; /* Fondo más oscuro al pasar el mouse */
+}
+
+/* Para los botones de "Carrito" */
+.btn-nav .cart-badge {
+  position: absolute;
+  top: -5px;
+  right: -10px;
+  background-color: red;
+  color: white;
+  font-size: 12px;
+  padding: 5px 8px;
+  border-radius: 50%;
+}
+/* Estilos generales para el navbar */
+.navbar-custom {
+  background-color: #1a1a1a; /* Fondo oscuro */
+  padding: 10px 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap; /* Asegura que los elementos se ajusten */
+}
+
+.navbar-logo {
+  width: 40px;
+  height: auto;
+  margin-right: 10px;
+}
+
+.nav-link-custom {
+  color: #fff; /* Color de texto blanco */
+  text-decoration: none;
+  margin: 0 10px;
+  position: relative;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.navbar-brand-custom {
+  color: white;
+  display: flex;
+  align-items: center;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.brand-text {
+  margin-left: 10px;
+}
+
+/* Estilo para los botones */
+.btn {
+  border-radius: 20px;
+  padding: 8px 20px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #0056b3; /* Fondo más oscuro en hover */
+}
+
+/* Estilo para el dropdown */
+.dropdown-toggle {
+  background-color: #555; /* Fondo del botón de categorías */
+  color: white;
+  border: none;
+  padding: 10px;
+}
+
+.dropdown-menu {
+  background-color: #fff; /* Fondo blanco para el dropdown */
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+.dropdown-item {
+  font-size: 14px;
+  color: #333; /* Color oscuro para los ítems */
+}
+
+.dropdown-item:hover {
+  background-color: #f8f9fa; /* Fondo claro al pasar el mouse */
+  color: #007bff; /* Color azul en hover */
+}
+
+/* Estilo para el carrito */
+.cart-badge {
+  position: absolute;
+  top: -5px;
+  right: -10px;
+  background-color: red;
+  color: white;
+  font-size: 12px;
+  padding: 5px 8px;
+  border-radius: 50%;
+}
+.navbar-logo {
+    width: 110px; /* Ajusta el tamaño del logo */
+  }
+/* Media query para pantallas más pequeñas */
+@media (max-width: 885px) {
+  .navbar-custom {
+    flex-direction: column;  /* Los elementos se apilan verticalmente */
+    align-items: flex-start; /* Alineación a la izquierda */
+  }
+
+  .navbar-links {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: flex-start;
+  }
+
+  .dropdown-toggle {
+    width: 100%; /* El botón de categorías ocupa todo el ancho en pantallas pequeñas */
+    text-align: center;
+  }
+
+  .dropdown-menu {
+    width: 100%;
+  }
+
+  .btn {
+    width: 100%;  /* Los botones ahora ocupan todo el ancho */
+    margin: 5px 0;
+  }
+
+  .navbar-logo {
+    width: 50px; /* Ajusta el tamaño del logo */
+  }
+
+  .nav-link-custom {
+    width: 100%;
+    margin: 5px 0;
+    text-align: center;
+  }
 }

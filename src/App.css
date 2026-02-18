@@ -207,3 +207,10 @@ h1 {
   font-size: 18px;
   padding: 14px;
 }
+
+.btn-group{
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 20px;
+}

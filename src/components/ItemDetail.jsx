@@ -1,14 +1,29 @@
-// components/ItemDetail.jsx
 import { useParams, Link } from 'react-router-dom';
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { CartContext } from './CartContext';
+import { doc, getDoc } from "firebase/firestore";
+import { db } from '../assets/service/firebase'; // Asegúrate de tener la importación de Firebase configurada correctamente
 
-const ItemDetail = ({ comidas }) => {
-  const { id } = useParams();
+const ItemDetail = () => {
+  const { id } = useParams(); // Obtienes el id del producto desde la URL
   const { addToCart } = useContext(CartContext);
+  const [producto, setProducto] = useState(null);
   const [quantity, setQuantity] = useState(1);
   
-  const producto = comidas.find((comida) => comida.id === parseInt(id));
+  useEffect(() => {
+    const fetchProduct = async () => {
+      const docRef = doc(db, "productos", id); // Accedes al documento con el id
+      const docSnap = await getDoc(docRef); // Obtienes el documento de Firestore
+
+      if (docSnap.exists()) {
+        setProducto({ id: docSnap.id, ...docSnap.data() }); // Guardas los datos del producto en el estado
+      } else {
+        console.log("No se encontró el producto!");
+      }
+    };
+
+    fetchProduct();
+  }, [id]); // Vuelve a ejecutar cuando cambia el id
 
   if (!producto) {
     return (
@@ -54,19 +69,19 @@ const ItemDetail = ({ comidas }) => {
           
           <div className="mt-4">
             <label className="me-3"><strong>Cantidad:</strong></label>
-            <div className="btn-group mb-3" role="group">
+            <div className="btn-group mb-3 bg-white" role="group">
               <button 
-                className="btn btn-outline-secondary"
+                className="btn btn-outline-secondary text-bg-dark"
                 onClick={decreaseQuantity}
                 disabled={quantity <= 1}
               >
                 -
               </button>
-              <span className="btn btn-outline-secondary disabled">
+              <span className="btn btn-outline-secondary text-bg-dark">
                 {quantity}
               </span>
               <button 
-                className="btn btn-outline-secondary"
+                className="btn btn-outline-secondary text-bg-dark m-lg-1"
                 onClick={increaseQuantity}
               >
                 +
