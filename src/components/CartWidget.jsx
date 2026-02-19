@@ -1,17 +1,17 @@
 import React, { useContext, useState } from 'react';
 import { CartContext } from './CartContext';
 import { Link } from 'react-router-dom';
-import './CartWidget.css'; // Opcional: para estilos personalizados
+import './CartWidget.css'; 
 
 function CartWidget() {
   const { cart, removeFromCart, clearCart, updateQuantity } = useContext(CartContext);
   
-  const [paymentSuccess, setPaymentSuccess] = useState(false); // Estado para mostrar mensaje de pago exitoso
+  const [paymentSuccess, setPaymentSuccess] = useState(false); 
 
-  // Calcular total de items
+  
   const totalItems = cart.reduce((total, item) => total + (item.quantity || 1), 0);
 
-  // Calcular precio total (si tienes precios)
+  
   const totalPrice = cart.reduce((total, item) => {
     const price = item.precio || 0;
     const quantity = item.quantity || 1;
@@ -20,21 +20,17 @@ function CartWidget() {
 
   const handleCheckout = () => {
     if (cart.length === 0) {
-      //alert("Tu carrito está vacío. Agrega algunos productos primero.");
       return;
     }
 
-    // Simulamos un proceso de pago exitoso
-    //alert('Pago procesado exitosamente. ¡Gracias por tu compra!');
 
-    // Vaciar el carrito
     clearCart();
 
-    // Mostrar mensaje de pago realizado
+    
     setPaymentSuccess(true);
   };
 
-  // Si el carrito está vacío y no hay pago exitoso, mostrar mensaje de carrito vacío
+  
   if (cart.length === 0 && !paymentSuccess) {
     return (
       <div className="container mt-5">
@@ -53,7 +49,7 @@ function CartWidget() {
     <div className="container mt-4">
       <h2 className="mb-4">Carrito de Compras</h2>
 
-      {/* Mostrar mensaje de pago exitoso */}
+
       {paymentSuccess && (
         <div className="alert alert-success text-center">
           <h4>¡Pago realizado con éxito!</h4>
@@ -64,7 +60,7 @@ function CartWidget() {
         </div>
       )}
 
-      {/* Solo mostrar el carrito si no hay pago exitoso */}
+
       {!paymentSuccess && (
         <div className="row">
           <div className="col-md-8">
@@ -135,12 +131,12 @@ function CartWidget() {
                   <strong>{totalItems}</strong>
                 </div>
                 {/* Descomentar si tienes precios */}
-                {/* 
+                
                 <div className="d-flex justify-content-between mb-3">
                   <span>Total:</span>
                   <strong>${totalPrice.toFixed(2)}</strong>
                 </div>
-                */}
+               
                 <button 
                   className="btn btn-success w-100 mb-2"
                   onClick={handleCheckout} // Llamada al proceso de pago

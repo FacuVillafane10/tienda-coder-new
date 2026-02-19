@@ -1,11 +1,6 @@
-/* =============================================
-   PAULA FOODS — NavBar.css
-   Prefijo: pf- (Paula Foods) para no chocar con Bootstrap
-   ============================================= */
-
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600&display=swap');
 
-/* ── Variables ── */
+
 :root {
   --pf-accent:        #20a690;
   --pf-accent-dark:   #178a76;
@@ -16,7 +11,6 @@
   --pf-ease:          0.22s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ── Wrapper ── */
 .pf-navbar {
   font-family: 'DM Sans', sans-serif;
   background-color: rgba(255, 255, 255, 0.94);
@@ -33,7 +27,7 @@
   z-index: 1000;
 }
 
-/* ── Logo ── */
+
 .pf-navbar__logo-link {
   display: flex;
   align-items: center;
@@ -51,12 +45,12 @@
   opacity: 0.88;
 }
 
-/* ── Links ── */
+
 .pf-navbar__links {
   display: flex;
   align-items: center;
   gap: 2px;
-  flex: 1; /* ocupa el espacio central */
+  flex: 1; 
 }
 
 .pf-nav-link {
@@ -72,7 +66,6 @@
   transition: background var(--pf-ease), color var(--pf-ease);
   letter-spacing: 0.01em;
   white-space: nowrap;
-  /* Resetear estilos de Bootstrap que puedan interferir */
   background: transparent;
   border: none;
   cursor: pointer;
@@ -96,7 +89,6 @@
   color: #ffffff;
 }
 
-/* Dropdown toggle — quitar el caret por defecto de Bootstrap si querés */
 .pf-nav-link--dropdown::after {
   margin-left: 4px;
   opacity: 0.7;
@@ -167,7 +159,6 @@
   transform: translateY(0);
 }
 
-/* Badge con cantidad */
 .pf-cart-badge {
   display: inline-flex;
   align-items: center;
@@ -182,7 +173,6 @@
   line-height: 1;
 }
 
-/* ── Responsive ── */
 @media (max-width: 768px) {
   .pf-navbar {
     height: auto;
