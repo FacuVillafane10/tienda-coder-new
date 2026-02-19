@@ -28,8 +28,7 @@
   padding: 0 36px;
   display: flex;
   align-items: center;
-  gap: 24px;
-  position: sticky;
+  gap: 24px;  
   top: 0;
   z-index: 1000;
 }

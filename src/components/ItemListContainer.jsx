@@ -5,7 +5,7 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from '../assets/service/firebase';  
 
 function ItemListContainer({ message }) {
-  // State para almacenar productos desde Firebase
+  
   const [productos, setProductos] = useState([]);
   const { addToCart } = useContext(CartContext);
 
@@ -13,8 +13,8 @@ function ItemListContainer({ message }) {
     addToCart(comida);    
   };
 
-  // Estado para manejar errores
-  const [error, setError] = useState(null); // Asegúrate de que esta línea esté correctamente declarada.
+  
+  const [error, setError] = useState(null); 
 
   useEffect(() => {
     const prodCollection = collection(db, "productos");
@@ -31,12 +31,12 @@ function ItemListContainer({ message }) {
         setError('Error al obtener productos');
         console.error("Error obteniendo productos de Firebase: ", error);
       });
-  }, []); // Dependencias vacías para ejecutar solo una vez al montar
+  }, []);
 
   return (
     <div>
       <h3 className="d-flex justify-content-center">{message}</h3>
-      {error && <p>{error}</p>} {/* Muestra el mensaje de error si ocurre */}
+      {error && <p>{error}</p>}
       <div className="item-list">
         {productos.map((comida) => (
           <div key={comida.id} className="item-card">

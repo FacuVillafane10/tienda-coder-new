@@ -2,28 +2,28 @@ import { useParams, Link } from 'react-router-dom';
 import { useContext, useState, useEffect } from 'react';
 import { CartContext } from './CartContext';
 import { doc, getDoc } from "firebase/firestore";
-import { db } from '../assets/service/firebase'; // Asegúrate de tener la importación de Firebase configurada correctamente
+import { db } from '../assets/service/firebase'; 
 
 const ItemDetail = () => {
-  const { id } = useParams(); // Obtienes el id del producto desde la URL
+  const { id } = useParams(); 
   const { addToCart } = useContext(CartContext);
   const [producto, setProducto] = useState(null);
   const [quantity, setQuantity] = useState(1);
   
   useEffect(() => {
     const fetchProduct = async () => {
-      const docRef = doc(db, "productos", id); // Accedes al documento con el id
-      const docSnap = await getDoc(docRef); // Obtienes el documento de Firestore
+      const docRef = doc(db, "productos", id); 
+      const docSnap = await getDoc(docRef); 
 
       if (docSnap.exists()) {
-        setProducto({ id: docSnap.id, ...docSnap.data() }); // Guardas los datos del producto en el estado
+        setProducto({ id: docSnap.id, ...docSnap.data() }); 
       } else {
         console.log("No se encontró el producto!");
       }
     };
 
     fetchProduct();
-  }, [id]); // Vuelve a ejecutar cuando cambia el id
+  }, [id]); 
 
   if (!producto) {
     return (
@@ -39,12 +39,12 @@ const ItemDetail = () => {
   }
 
   const handleAddToCart = () => {
-    // Agregar el producto múltiples veces según la cantidad
+    
     for (let i = 0; i < quantity; i++) {
       addToCart(producto);
     }
     alert(`${quantity} ${producto.nombre}(s) agregado(s) al carrito`);
-    setQuantity(1); // Reset cantidad
+    setQuantity(1); 
   };
 
   const increaseQuantity = () => setQuantity(prev => prev + 1);
