@@ -1,836 +1,209 @@
-/* components/NavBar.css */
-.navbar-custom {
-  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-  padding: 1rem 0;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+/* =============================================
+   PAULA FOODS — NavBar.css
+   Prefijo: pf- (Paula Foods) para no chocar con Bootstrap
+   ============================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600&display=swap');
+
+/* ── Variables ── */
+:root {
+  --pf-accent:        #20a690;
+  --pf-accent-dark:   #178a76;
+  --pf-accent-light:  rgba(32, 166, 144, 0.12);
+  --pf-text:          #1a2e2b;
+  --pf-shadow:        0 2px 20px rgba(0, 0, 0, 0.07);
+  --pf-radius:        10px;
+  --pf-ease:          0.22s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Wrapper ── */
+.pf-navbar {
+  font-family: 'DM Sans', sans-serif;
+  background-color: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1.5px solid rgba(32, 166, 144, 0.18);
+  box-shadow: var(--pf-shadow);
+  height: 68px;
+  padding: 0 36px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
   position: sticky;
   top: 0;
-  z-index: 999;
+  z-index: 1000;
 }
 
-.navbar-custom .container-fluid {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 2rem;
+/* ── Logo ── */
+.pf-navbar__logo-link {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  flex-shrink: 0;
 }
 
-.navbar-brand-custom {
-  color: white;
-  font-size: 1.5rem;
-  font-weight: 700;
+.pf-navbar__logo {
+  width: 120px;
+  height: auto;
+  transition: transform var(--pf-ease), opacity var(--pf-ease);
+}
+
+.pf-navbar__logo:hover {
+  transform: scale(1.04);
+  opacity: 0.88;
+}
+
+/* ── Links ── */
+.pf-navbar__links {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex: 1; /* ocupa el espacio central */
+}
+
+.pf-nav-link {
+  color: var(--pf-text);
   text-decoration: none;
-  display: flex;
+  font-size: 0.88rem;
+  font-weight: 500;
+  padding: 7px 15px;
+  border-radius: var(--pf-radius);
+  display: inline-flex;
   align-items: center;
-  gap: 0.75rem;
-  transition: transform 0.2s ease;
+  gap: 6px;
+  transition: background var(--pf-ease), color var(--pf-ease);
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  /* Resetear estilos de Bootstrap que puedan interferir */
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  line-height: 1;
 }
 
-.navbar-brand-custom:hover {
-  color: #3498db;
-  transform: translateY(-2px);
+.pf-nav-link:hover,
+.pf-nav-link:focus-visible {
+  background-color: var(--pf-accent-light);
+  color: var(--pf-accent);
+  text-decoration: none;
 }
 
-
-
-.navbar-brand-custom:hover .navbar-logo {
-  transform: rotate(360deg) scale(1.1);
+.pf-nav-link--active {
+  background-color: var(--pf-accent);
+  color: #ffffff !important;
 }
 
-.brand-text {
+.pf-nav-link--active:hover {
+  background-color: var(--pf-accent-dark);
+  color: #ffffff;
+}
+
+/* Dropdown toggle — quitar el caret por defecto de Bootstrap si querés */
+.pf-nav-link--dropdown::after {
+  margin-left: 4px;
+  opacity: 0.7;
+}
+
+/* ── Dropdown menu ── */
+.pf-dropdown-menu {
+  border: 1.5px solid rgba(32, 166, 144, 0.2) !important;
+  border-radius: var(--pf-radius) !important;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.1) !important;
+  padding: 6px !important;
+  min-width: 190px;
+  animation: pfFadeDown 0.18s ease forwards;
+}
+
+.pf-dropdown-item {
+  font-family: 'DM Sans', sans-serif !important;
+  font-size: 0.875rem !important;
+  color: var(--pf-text) !important;
+  border-radius: 7px !important;
+  padding: 9px 13px !important;
+  transition: background var(--pf-ease), color var(--pf-ease) !important;
+}
+
+.pf-dropdown-item:hover,
+.pf-dropdown-item:focus {
+  background-color: var(--pf-accent-light) !important;
+  color: var(--pf-accent) !important;
+}
+
+@keyframes pfFadeDown {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Carrito ── */
+.pf-navbar__actions {
+  flex-shrink: 0;
+}
+
+.pf-cart-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--pf-accent);
+  color: #ffffff !important;
+  text-decoration: none;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 9px 20px;
+  border-radius: 50px;
+  position: relative;
+  transition: background var(--pf-ease), transform var(--pf-ease), box-shadow var(--pf-ease);
+  box-shadow: 0 4px 14px rgba(32, 166, 144, 0.3);
   white-space: nowrap;
 }
 
-.navbar-links {
-  display: flex;
-  gap: 1.5rem;
-  align-items: center;
-}
-
-.nav-link-custom {
-  color: rgba(255, 255, 255, 0.85);
+.pf-cart-btn:hover {
+  background-color: var(--pf-accent-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(32, 166, 144, 0.4);
+  color: #ffffff;
   text-decoration: none;
-  font-size: 1rem;
-  font-weight: 500;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  display: flex;
+}
+
+.pf-cart-btn:active {
+  transform: translateY(0);
+}
+
+/* Badge con cantidad */
+.pf-cart-badge {
+  display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  transition: all 0.3s ease;
-  position: relative;
+  justify-content: center;
+  background-color: #ffffff;
+  color: var(--pf-accent);
+  font-size: 0.7rem;
+  font-weight: 700;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  line-height: 1;
 }
 
-.nav-link-custom i {
-  font-size: 1.2rem;
-}
-
-.nav-link-custom:hover {
-  color: white;
-  background-color: rgba(255, 255, 255, 0.1);
-  transform: translateY(-2px);
-}
-
-.nav-link-custom.active {
-  color: white;
-  background-color: #3498db;
-  box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
-}
-
-.nav-link-custom.active::after {
-  content: '';
-  position: absolute;
-  bottom: -8px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0;
-  height: 0;
-  border-left: 6px solid transparent;
-  border-right: 6px solid transparent;
-  border-top: 6px solid #3498db;
-}
-
-/* Responsive */
+/* ── Responsive ── */
 @media (max-width: 768px) {
-  .navbar-custom .container-fluid {
-    padding: 0 1rem;
-  }
-
-  .navbar-brand-custom {
-    font-size: 1.2rem;
-  }
-
-  .navbar-logo {
-    width: 135px;
+  .pf-navbar {
     height: auto;
+    flex-wrap: wrap;
+    padding: 12px 16px;
+    gap: 10px;
   }
 
-  .brand-text {
-    font-size: 1rem;
-  }
-
-  .navbar-links {
-    gap: 0.5rem;
-  }
-
-  .nav-link-custom {
-    font-size: 0.9rem;
-    padding: 0.4rem 0.8rem;
-  }
-
-  .nav-link-custom span {
-    display: none; /* Ocultar texto en móvil */
-  }
-}
-
-@media (max-width: 480px) {
-  .navbar-logo {
-    width: 30px;
-    height: auto;
-  }
-
-  .navbar-brand-custom {
-    font-size: 1rem;
-  }
-
-  .brand-text {
-    display: none; /* Ocultar texto del brand en móviles muy pequeños */
-  }
-}
-
-
-.navbar-logo{
-    width: 185px;
-    height: auto;
-}
-
-.navbar-custom {
-  background-color: #fff; /* Ajusta el fondo del navbar */
-  padding: 10px 20px;
-}
-
-.navbar-logo {
-  width: 40px;
-  height: auto;
-  margin-right: 10px;
-}
-
-.nav-link-custom {
-  color: #333;
-  text-decoration: none;
-  margin: 0 10px;
-  position: relative;
-}
-
-.nav-link-custom.active {
-  font-weight: bold;
-}
-
-.cart-badge {
-  position: absolute;
-  top: -5px;
-  right: -10px;
-  background-color: red;
-  color: white;
-  font-size: 12px;
-  padding: 5px 8px;
-  border-radius: 50%;
-}
-
-
-.navbar-custom {
-  background-color: #fff; /* Ajusta el fondo del navbar */
-  padding: 10px 20px;
-}
-
-.navbar-logo {
-  width: 40px;  /* Ajusta el tamaño del logo */
-  height: auto;
-  margin-right: 10px;
-}
-
-.nav-link-custom {
-  color: #333;
-  text-decoration: none;
-  margin: 0 10px;
-  position: relative;
-}
-
-.nav-link-custom.active {
-  font-weight: bold;
-}
-
-.cart-badge {
-  position: absolute;
-  top: -5px;
-  right: -10px;
-  background-color: red;
-  color: white;
-  font-size: 12px;
-  padding: 5px 8px;
-  border-radius: 50%;
-}
-.navbar-custom {
-  background-color: #fff;
-  padding: 10px 20px;
-}
-
-.navbar-logo {
-  width: 40px;
-  height: auto;
-  margin-right: 10px;
-}
-
-.nav-link-custom {
-  color: #333;
-  text-decoration: none;
-  margin: 0 10px;
-  position: relative;
-}
-
-.nav-link-custom.active {
-  font-weight: bold;
-}
-
-.cart-badge {
-  position: absolute;
-  top: -5px;
-  right: -10px;
-  background-color: red;
-  color: white;
-  font-size: 12px;
-  padding: 5px 8px;
-  border-radius: 50%;
-}
-
-/* Estilo del dropdown */
-.dropdown-toggle::after {
-  content: none; /* Oculta el icono de flecha del dropdown */
-}
-
-.dropdown-menu {
-  min-width: 200px; /* Ajusta el tamaño del dropdown */
-}
-
-.dropdown-item {
-  padding: 10px;
-  font-size: 14px;
-}
-/* Estilo general para todos los botones */
-.btn {
-  border-radius: 20px; /* Bordes redondeados */
-  padding: 10px 20px; /* Espaciado interno */
-  font-weight: bold; /* Texto en negrita */
-  text-align: center; /* Alineación del texto */
-  display: inline-block; /* Para que los botones se alineen correctamente */
-  cursor: pointer; /* Para dar la sensación de clickeable */
-  transition: background-color 0.3s ease; /* Transición suave al pasar el mouse */
-}
-
-/* Estilo específico para los botones "Agregar al carrito" y "Ver más sobre el Producto" */
-.btn-primary {
-  background-color: #007bff; /* Color de fondo similar al carrito */
-  color: white; /* Color del texto */
-  border: none; /* Sin bordes */
-}
-
-.btn-primary:hover {
-  background-color: #0056b3; /* Color al pasar el mouse */
-}
-
-/* Estilo para el botón "Ver más sobre el Producto" */
-.btn-secondary {
-  background-color: #6c757d; /* Color gris */
-  color: white;
-  border: none;
-}
-
-.btn-secondary:hover {
-  background-color: #5a6268; /* Gris más oscuro al pasar el mouse */
-}
-
-/* Estilo para los botones del carrito */
-.text-bg-primary {
-  background-color: #0d6efd; /* Color azul del carrito */
-  color: white;
-}
-
-.text-bg-primary:hover {
-  background-color: #0b5ed7; /* Azul más oscuro cuando pasas el mouse */
-}
-/* Estilo general para todos los botones */
-.navbar-custom .btn {
-  border-radius: 20px; /* Bordes redondeados */
-  padding: 10px 20px; /* Espaciado interno */
-  font-weight: bold; /* Texto en negrita */
-  text-align: center; /* Alineación del texto */
-  display: inline-block; /* Para que los botones se alineen correctamente */
-  cursor: pointer; /* Para dar la sensación de clickeable */
-  transition: background-color 0.3s ease; /* Transición suave al pasar el mouse */
-}
-
-/* Estilo específico para los botones "Agregar al carrito" y "Ver más sobre el Producto" */
-.btn-primary {
-  background-color: #007bff; /* Color de fondo similar al carrito */
-  color: white; /* Color del texto */
-  border: none; /* Sin bordes */
-}
-
-.btn-primary:hover {
-  background-color: #0056b3; /* Color al pasar el mouse */
-}
-
-/* Estilo para el botón "Ver más sobre el Producto" */
-.btn-secondary {
-  background-color: #6c757d; /* Color gris */
-  color: white;
-  border: none;
-}
-
-.btn-secondary:hover {
-  background-color: #5a6268; /* Gris más oscuro al pasar el mouse */
-}
-
-/* Estilo para los botones del carrito */
-.cart-badge {
-  position: absolute;
-  top: -5px;
-  right: -10px;
-  background-color: red;
-  color: white;
-  font-size: 12px;
-  padding: 5px 8px;
-  border-radius: 50%;
-}
-/* Estilos para el logo */
-.navbar-logo {
-  width: 180px;
-  height: auto;
-  object-fit: contain;
-  filter: brightness(1.1);
-  transition: transform 0.3s ease;
-}
-
-
-/* Estilos generales para el navbar */
-.navbar-custom {
-  background-color: #1a1a1a; /* Fondo oscuro */
-  padding: 10px 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap; /* Asegura que los elementos se ajusten */
-}
-
-.navbar-logo {
-  width: 40px;
-  height: auto;
-  margin-right: 10px;
-}
-
-.nav-link-custom {
-  color: #fff; /* Color de texto blanco */
-  text-decoration: none;
-  margin: 0 10px;
-  position: relative;
-  font-size: 16px;
-  font-weight: 500;
-}
-
-.navbar-brand-custom {
-  color: white;
-  display: flex;
-  align-items: center;
-  font-size: 22px;
-  font-weight: 700;
-}
-
-.brand-text {
-  margin-left: 10px;
-}
-
-/* Estilo para el dropdown */
-.dropdown-toggle {
-  background-color: #555; /* Fondo del botón de categorías */
-  color: white;
-  border: none;
-  padding: 10px;
-}
-
-.dropdown-menu {
-  background-color: #fff; /* Fondo blanco para el dropdown */
-  border-radius: 5px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
-}
-
-.dropdown-item {
-  font-size: 14px;
-  color: #333; /* Color oscuro para los ítems */
-}
-
-.dropdown-item:hover {
-  background-color: #f8f9fa; /* Fondo claro al pasar el mouse */
-  color: #007bff; /* Color azul en hover */
-}
-
-/* Estilo para el carrito */
-.cart-badge {
-  position: absolute;
-  top: -5px;
-  right: -10px;
-  background-color: red;
-  color: white;
-  font-size: 12px;
-  padding: 5px 8px;
-  border-radius: 50%;
-}
-
-
-/* Media query para pantallas pequeñas */
-@media (max-width: 885px) {
-  .navbar-custom {
-    flex-direction: column;  /* Los elementos se apilan verticalmente */
-    align-items: flex-start; /* Alineación a la izquierda */
-  }
-
-  .navbar-links {
-    display: flex;
-    flex-direction: column;
-    width: 100%;  /* Asegúrate de que ocupe todo el ancho */
-    align-items: flex-start;
-  }
-
-  .btn {
-    width: 100%;  /* Los botones ahora ocupan todo el ancho en pantallas pequeñas */
-    margin: 5px 0; /* Espaciado entre los botones */
-  }
-
-  .navbar-logo {
-    width: 50px;  /* Ajusta el tamaño del logo si es necesario */
-  }
-}
-
-
-/* Estilos generales para el navbar */
-.navbar-custom {
-  background-color: #1a1a1a; /* Fondo oscuro */
-  padding: 10px 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap; /* Asegura que los elementos se ajusten */
-}
-
-.navbar-logo {
-  width: 40px;
-  height: auto;
-  margin-right: 10px;
-}
-
-.nav-link-custom {
-  color: #fff; /* Color de texto blanco */
-  text-decoration: none;
-  margin: 0 10px;
-  position: relative;
-  font-size: 16px;
-  font-weight: 500;
-}
-
-.navbar-brand-custom {
-  color: white;
-  display: flex;
-  align-items: center;
-  font-size: 22px;
-  font-weight: 700;
-}
-
-.brand-text {
-  margin-left: 10px;
-}
-
-/* Estilo para los botones */
-.btn {
-  border-radius: 20px;
-  padding: 8px 20px;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
-}
-
-.btn:hover {
-  background-color: #0056b3; /* Fondo más oscuro en hover */
-}
-
-/* Estilo para el dropdown */
-.dropdown-toggle {
-  background-color: #365ba0; /* Fondo del botón de categorías */
-  color: white;
-  border: none;
-  padding: 10px;
-}
-
-.dropdown-menu {
-  background-color: #fff; /* Fondo blanco para el dropdown */
-  border-radius: 5px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
-}
-
-.dropdown-item {
-  font-size: 14px;
-  color: #365ba0; /* Color oscuro para los ítems */
-}
-
-.dropdown-item:hover {
-  background-color: #f8f9fa; /* Fondo claro al pasar el mouse */
-  color: #007bff; /* Color azul en hover */
-}
-
-/* Estilo para el carrito */
-.cart-badge {
-  position: absolute;
-  top: -5px;
-  right: -10px;
-  background-color: red;
-  color: white;
-  font-size: 12px;
-  padding: 5px 8px;
-  border-radius: 50%;
-}
-
-/* Media query para pantallas más pequeñas */
-@media (max-width: 885px) {
-  .navbar-custom {
-    flex-direction: column;  /* Los elementos se apilan verticalmente */
-    align-items: flex-start; /* Alineación a la izquierda */    
-  }
-
-  .navbar-links {
-    display: flex;
-    flex-direction: column;
+  .pf-navbar__links {
     width: 100%;
-    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 4px;
   }
 
-  .dropdown-toggle {
-    width: 100%; /* El botón de categorías ocupa todo el ancho en pantallas pequeñas */
-    text-align: center;
-  }
-
-  .dropdown-menu {
+  .pf-navbar__actions {
     width: 100%;
   }
 
-  .btn {
-    width: 100%;  /* Los botones ahora ocupan todo el ancho */
-    margin: 5px 0;
-  }
-
-  .navbar-logo {
-    width: 70%; /* Ajusta el tamaño del logo */
-  }
-
-  .nav-link-custom {
+  .pf-cart-btn {
     width: 100%;
-    margin: 5px 0;
-    text-align: center;
-  }
-  
-}
-
-/* Estilo general para el navbar */
-.navbar-custom {
-  background-color: #1a1a1a; /* Fondo oscuro */
-  padding: 10px 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-.navbar-logo {
-  width: 40px;
-  height: auto;
-  margin-right: 10px;
-}
-
-.navbar-links {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  align-items: center;
-}
-
-.nav-link-custom {
-  color: white;
-  font-size: 16px;
-  font-weight: 500;
-  text-decoration: none;
-  margin: 0 10px;
-  position: relative;
-  padding: 10px;
-  border-radius: 5px;
-  display: flex;
-  align-items: center;
-}
-
-.nav-link-custom:hover {
-  background-color: #0056b3;
-}
-
-.btn-primary {
-  background-color: #007bff; /* Botones de color azul */
-  color: white;
-  border: none;
-  padding: 8px 20px;
-  font-size: 16px;
-  border-radius: 20px;
-  transition: background-color 0.3s ease;
-}
-
-.btn-primary:hover {
-  background-color: #0056b3;
-}
-
-.dropdown-menu {
-  background-color: #fff; /* Fondo blanco para el dropdown */
-  border-radius: 5px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
-}
-
-.dropdown-item {
-  color: #333;
-  padding: 10px;
-}
-
-.dropdown-item:hover {
-  background-color: #f8f9fa;
-  color: #007bff;
-}
-
-/* Badge en el carrito */
-.cart-badge {
-  position: absolute;
-  top: -5px;
-  right: -10px;
-  background-color: red;
-  color: white;
-  font-size: 12px;
-  padding: 5px 8px;
-  border-radius: 50%;
-}
-
-/* Estilo para que se vea bien en dispositivos pequeños */
-@media (max-width: 885px) {
-  .navbar-custom {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .navbar-links {
-    flex-direction: column;
-    width: 100%;
-    align-items: flex-start;
-  }
-
-  .btn {
-    width: 100%;
-    margin: 5px 0;
-  }
-}
-/* Clase común para todos los botones */
-.btn-nav {
-  padding: 8px 20px;
-  font-weight: bold;
-  font-size: 16px;
-  border-radius: 20px;
-  transition: background-color 0.3s ease;
-  color: #fff;
-  background-color: #007bff; /* Fondo azul */
-  border: none;
-}
-
-.btn-nav:hover {
-  background-color: #0056b3; /* Fondo más oscuro al pasar el mouse */
-}
-
-/* Para los botones de "Carrito" */
-.btn-nav .cart-badge {
-  position: absolute;
-  top: -5px;
-  right: -10px;
-  background-color: red;
-  color: white;
-  font-size: 12px;
-  padding: 5px 8px;
-  border-radius: 50%;
-}
-/* Estilos generales para el navbar */
-.navbar-custom {
-  background-color: #1a1a1a; /* Fondo oscuro */
-  padding: 10px 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap; /* Asegura que los elementos se ajusten */
-}
-
-.navbar-logo {
-  width: 40px;
-  height: auto;
-  margin-right: 10px;
-}
-
-.nav-link-custom {
-  color: #fff; /* Color de texto blanco */
-  text-decoration: none;
-  margin: 0 10px;
-  position: relative;
-  font-size: 16px;
-  font-weight: 500;
-}
-
-.navbar-brand-custom {
-  color: white;
-  display: flex;
-  align-items: center;
-  font-size: 22px;
-  font-weight: 700;
-}
-
-.brand-text {
-  margin-left: 10px;
-}
-
-/* Estilo para los botones */
-.btn {
-  border-radius: 20px;
-  padding: 8px 20px;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
-}
-
-.btn:hover {
-  background-color: #0056b3; /* Fondo más oscuro en hover */
-}
-
-/* Estilo para el dropdown */
-.dropdown-toggle {
-  background-color: #555; /* Fondo del botón de categorías */
-  color: white;
-  border: none;
-  padding: 10px;
-}
-
-.dropdown-menu {
-  background-color: #fff; /* Fondo blanco para el dropdown */
-  border-radius: 5px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
-}
-
-.dropdown-item {
-  font-size: 14px;
-  color: #333; /* Color oscuro para los ítems */
-}
-
-.dropdown-item:hover {
-  background-color: #f8f9fa; /* Fondo claro al pasar el mouse */
-  color: #007bff; /* Color azul en hover */
-}
-
-/* Estilo para el carrito */
-.cart-badge {
-  position: absolute;
-  top: -5px;
-  right: -10px;
-  background-color: red;
-  color: white;
-  font-size: 12px;
-  padding: 5px 8px;
-  border-radius: 50%;
-}
-.navbar-logo {
-    width: 110px; /* Ajusta el tamaño del logo */
-  }
-/* Media query para pantallas más pequeñas */
-@media (max-width: 885px) {
-  .navbar-custom {
-    flex-direction: column;  /* Los elementos se apilan verticalmente */
-    align-items: flex-start; /* Alineación a la izquierda */
-  }
-
-  .navbar-links {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    align-items: flex-start;
-  }
-
-  .dropdown-toggle {
-    width: 100%; /* El botón de categorías ocupa todo el ancho en pantallas pequeñas */
-    text-align: center;
-  }
-
-  .dropdown-menu {
-    width: 100%;
-  }
-
-  .btn {
-    width: 100%;  /* Los botones ahora ocupan todo el ancho */
-    margin: 5px 0;
-  }
-
-  .navbar-logo {
-    width: 50px; /* Ajusta el tamaño del logo */
-  }
-
-  .nav-link-custom {
-    width: 100%;
-    margin: 5px 0;
-    text-align: center;
+    justify-content: center;
   }
 }
