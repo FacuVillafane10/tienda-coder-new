@@ -22,7 +22,7 @@ function App() {
         <Routes>
               <Route 
                 path='/' 
-                element={<ItemListContainer message="Lista de productos disponibles" />} 
+                element={<ItemListContainer message="Nuestros productos" />} 
               />
               <Route 
                 path='/product/:id' 
