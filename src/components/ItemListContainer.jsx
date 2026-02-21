@@ -32,24 +32,20 @@ function ItemListContainer({ message }) {
       });
   }, []);
 
-  
   const generarMensajeWhatsApp = () => {
-    if (cart.length === 0) {
-      return "Tu carrito está vacío. Agrega productos para realizar el pedido.";
-    }
+  if (cart.length === 0) {
+    return "Tu carrito está vacío. Agrega productos para realizar el pedido.";
+  }
 
-    const productosEnCarrito = cart.map(item => 
-      `${item.nombre} (${item.quantity}) x $${item.precio}`).join('  '); // Usamos item.quantity
-      if (cart.length === 1) {
-        return `Hola, me gustaría hacer un pedido del siguiente producto: ${productosEnCarrito}`;
-      }
-      if (cart.length > 1) {
-        return `Hola, me gustaría hacer un pedido de los siguientes productos: ${productosEnCarrito}`;
-      }
-  };
+  // Crear el mensaje con saltos de línea usando \n
+  const productosEnCarrito = cart.map(item => 
+    `${item.nombre} (${item.quantity}) x $${item.precio}`).join('\n'); // Usamos \n para el salto de línea
 
-  const numeroWhatsApp = '+5403512417327'; 
-  const linkWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(generarMensajeWhatsApp())}`;
+  return `Hola, me gustaría hacer un pedido de los siguientes productos: \n${productosEnCarrito}`;
+};
+
+const numeroWhatsApp = '+5403512417327'; // Tu número de WhatsApp
+const linkWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(generarMensajeWhatsApp())}`;
 
   return (
     <div>

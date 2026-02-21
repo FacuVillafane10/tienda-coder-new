@@ -1,4 +1,3 @@
-// components/CartWidget.jsx
 import React, { useContext, useState } from 'react';
 import { CartContext } from './CartContext';
 import { Link } from 'react-router-dom';
@@ -25,20 +24,20 @@ function CartWidget() {
     setPaymentSuccess(true);
   };
 
-  // Generar mensaje para WhatsApp con los productos del carrito
   const generarMensajeWhatsApp = () => {
-    if (cart.length === 0) {
-      return "Tu carrito está vacío. Agrega productos para realizar el pedido.";
-    }
+  if (cart.length === 0) {
+    return "Tu carrito está vacío. Agrega productos para realizar el pedido.";
+  }
 
-    const productosEnCarrito = cart.map(item => 
-      `${item.nombre} (${item.quantity}) x $${item.precio}`).join('  '); // Usamos item.quantity
+  // Crear el mensaje con saltos de línea usando \n
+  const productosEnCarrito = cart.map(item => 
+    `${item.nombre} (${item.quantity}) x $${item.precio}`).join('\n'); // Usamos \n para el salto de línea
 
-    return `Hola, me gustaría hacer un pedido de los siguientes productos: ${productosEnCarrito}`;
-  };
+  return `Hola, me gustaría hacer un pedido de los siguientes productos: \n${productosEnCarrito}`;
+};
 
-  const numeroWhatsApp = '+5403512417327'; // Tu número de WhatsApp
-  const linkWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(generarMensajeWhatsApp())}`;
+const numeroWhatsApp = '+5403512417327'; // Tu número de WhatsApp
+const linkWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(generarMensajeWhatsApp())}`;
 
   if (cart.length === 0 && !paymentSuccess) {
     return (
@@ -110,7 +109,7 @@ function CartWidget() {
                           >
                             <i className="bi bi-dash-lg"></i>
                           </button>
-                          <span className="btn btn-outline-black btn-sm disabled">
+                          <span className="btn btn-outline-secondary btn-sm disabled">
                             {producto.quantity || 1}
                           </span>
                           <button 
