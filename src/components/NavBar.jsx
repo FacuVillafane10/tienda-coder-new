@@ -24,7 +24,7 @@ function NavBar({ message }) {
           Inicio
         </Link>
 
-        {/* Dropdown Categorías — Bootstrap lo maneja con data-bs-toggle */}
+        {/* Dropdown Categorías */}
         <div className="dropdown">
           <button
             className="pf-nav-link pf-nav-link--dropdown dropdown-toggle"
@@ -36,7 +36,7 @@ function NavBar({ message }) {
           </button>
           <ul className="dropdown-menu pf-dropdown-menu">
             <li>
-              <Link className="dropdown-item pf-dropdown-item" to="/categorias/comidas-rapidas">
+              <Link className="dropdown-item pf-dropdown-item" to="/categorias/comidarapida">
                 🍔 Comidas Rápidas
               </Link>
             </li>
@@ -46,7 +46,7 @@ function NavBar({ message }) {
               </Link>
             </li>
             <li>
-              <Link className="dropdown-item pf-dropdown-item" to="/categorias/menu-diario">
+              <Link className="dropdown-item pf-dropdown-item" to="/categorias/menudiario">
                 🍽️ Menú Diario
               </Link>
             </li>

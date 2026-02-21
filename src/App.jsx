@@ -1,4 +1,4 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css'; 
 import 'bootstrap-icons/font/bootstrap-icons.css'; 
 import NavBar from './components/NavBar';
 import ItemListContainer from './components/ItemListContainer';
@@ -20,20 +20,21 @@ function App() {
         <NavBar message={message} />
         <CartIcon /> 
         <Routes>
-              <Route 
-                path='/' 
-                element={<ItemListContainer message="Nuestros productos" />} 
-              />
-              <Route 
-                path='/product/:id' 
-                element={<ItemDetail />}  
-              />
-              <Route path='/cart' element={<CartWidget />} />
-              
-              {/* Ruta para "Nosotros" */}
-              <Route path='/nosotros' element={<Nosotros />} /> 
-
-              <Route path='*' element={<Error />} />
+          <Route 
+            path='/' 
+            element={<ItemListContainer message="Nuestros productos" />} 
+          />
+          <Route 
+            path='/product/:id' 
+            element={<ItemDetail />}  
+          />
+          <Route 
+            path='/categorias/:categoria'  // Ruta para filtrar productos por categoría
+            element={<ItemListContainer message="Productos por categoría" />} 
+          />
+          <Route path='/cart' element={<CartWidget />} />
+          <Route path='/nosotros' element={<Nosotros />} /> 
+          <Route path='*' element={<Error />} />
         </Routes>
       </BrowserRouter>
     </CartProvider>
