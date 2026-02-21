@@ -7,13 +7,12 @@ import { db } from '../assets/service/firebase';
 function ItemListContainer({ message }) {
   
   const [productos, setProductos] = useState([]);
-  const { addToCart } = useContext(CartContext);
+  const { addToCart, cart, getCartCount } = useContext(CartContext); // Usamos getCartCount
 
   const handleAddToCart = (comida) => {
     addToCart(comida);    
   };
 
-  
   const [error, setError] = useState(null); 
 
   useEffect(() => {
@@ -32,6 +31,25 @@ function ItemListContainer({ message }) {
         console.error("Error obteniendo productos de Firebase: ", error);
       });
   }, []);
+
+  
+  const generarMensajeWhatsApp = () => {
+    if (cart.length === 0) {
+      return "Tu carrito está vacío. Agrega productos para realizar el pedido.";
+    }
+
+    const productosEnCarrito = cart.map(item => 
+      `${item.nombre} (${item.quantity}) x $${item.precio}`).join('  '); // Usamos item.quantity
+      if (cart.length === 1) {
+        return `Hola, me gustaría hacer un pedido del siguiente producto: ${productosEnCarrito}`;
+      }
+      if (cart.length > 1) {
+        return `Hola, me gustaría hacer un pedido de los siguientes productos: ${productosEnCarrito}`;
+      }
+  };
+
+  const numeroWhatsApp = '+5403512417327'; 
+  const linkWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(generarMensajeWhatsApp())}`;
 
   return (
     <div>
@@ -57,6 +75,15 @@ function ItemListContainer({ message }) {
           </div>
         ))}
       </div>
+
+      {/* Botón para enviar el carrito por WhatsApp */}
+      <button 
+        className="btn btn-success mt-3" 
+        onClick={() => window.open(linkWhatsApp, '_blank')}
+        disabled={getCartCount() === 0} 
+      >
+        {getCartCount() === 0 ? "Carrito vacío" : "Enviar carrito a WhatsApp"}
+      </button>
     </div>
   );
 }

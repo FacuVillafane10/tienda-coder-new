@@ -35,7 +35,7 @@
 }
 
 .pf-navbar__logo {
-  width: 120px;
+  width: 100px;
   height: auto;
   transition: transform var(--pf-ease), opacity var(--pf-ease);
 }
@@ -195,4 +195,36 @@
     width: 100%;
     justify-content: center;
   }
+}
+.pf-navbar {
+  font-family: 'DM Sans', sans-serif;
+  background-color: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1.5px solid rgba(32, 166, 144, 0.18);
+  box-shadow: var(--pf-shadow);
+  padding: 0 36px;
+  display: flex;
+  align-items: center;  /* Alineación vertical */
+  gap: 24px;
+  top: 0;
+  z-index: 1000;
+  height: auto; /* Ajuste automático a la altura del logo */
+}
+
+.pf-navbar__logo-link {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.pf-navbar__logo {
+  max-height: 100px; /* Ajusta el logo a una altura máxima deseada */
+  height: auto;
+  transition: transform var(--pf-ease), opacity var(--pf-ease);
+}
+
+.pf-navbar__logo:hover {
+  transform: scale(1.04);
+  opacity: 0.88;
 }
