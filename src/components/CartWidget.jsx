@@ -34,7 +34,7 @@ function CartWidget() {
     const productosEnCarrito = cart.map(item => 
       `${item.nombre} (${item.quantity}) x $${item.precio}`).join('  '); // Usamos item.quantity
 
-    return `Hola, me gustaría hacer un pedido de los siguientes productos: %0A${productosEnCarrito}`;
+    return `Hola, me gustaría hacer un pedido de los siguientes productos: ${productosEnCarrito}`;
   };
 
   const numeroWhatsApp = '+5403512417327'; // Tu número de WhatsApp

@@ -39,12 +39,9 @@ const ItemDetail = () => {
   }
 
   const handleAddToCart = () => {
-    
-    for (let i = 0; i < quantity; i++) {
-      addToCart(producto);
-    }
+    addToCart({ ...producto, quantity }); // Agregar el producto con la cantidad seleccionada
     alert(`${quantity} ${producto.nombre}(s) agregado(s) al carrito`);
-    setQuantity(1); 
+    setQuantity(1); // Reiniciar cantidad a 1 después de agregar al carrito
   };
 
   const increaseQuantity = () => setQuantity(prev => prev + 1);
