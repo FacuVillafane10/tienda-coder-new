@@ -1,12 +1,18 @@
-import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { collection, getDocs, query, where } from 'firebase/firestore';
-import { db } from '../assets/service/firebase';  
+import { Link, useParams } from 'react-router-dom';  // Agregado useParams
+import { useContext, useState, useEffect } from 'react';
+import { CartContext } from './CartContext';
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { db } from '../assets/service/firebase';
 
 function ItemListContainer({ message }) {
   const { categoria } = useParams();  // Obtener el parámetro de la categoría desde la URL
+  const { addToCart } = useContext(CartContext);  // Accedemos a la función addToCart
   const [productos, setProductos] = useState([]);
   const [error, setError] = useState(null);
+
+  const handleAddToCart = (comida) => {
+    addToCart(comida);  // Llamamos a la función para agregar al carrito
+  };
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -38,17 +44,27 @@ function ItemListContainer({ message }) {
 
   return (
     <div>
-      <h3>{message}</h3>
+      <h3 className="d-flex justify-content-center">{message}</h3>
       <div className="item-list">
         {productos.length === 0 && <p>No se encontraron productos en esta categoría</p>}
-        {productos.map((producto) => (
-          <div key={producto.id} className="item-card">
-            <img src={producto.foto} alt={producto.nombre} />
-            <h3>{producto.nombre}</h3>
-            <p className="descripcion-producto">{producto.descripcion}</p>
-            <button className="btn btn-primary mb-2">
+        {productos.map((comida) => (
+          <div key={comida.id} className="item-card">
+            <img src={comida.foto} alt={comida.nombre} />
+            <h3>{comida.nombre}</h3>
+            <p className="descripcion-producto">{comida.descripcion}</p>
+            
+            <button 
+              className="btn btn-primary mb-2"
+              onClick={() => handleAddToCart(comida)} 
+            >
               Agregar al carrito
             </button>
+            
+            <Link to={`/product/${comida.id}`}>
+              <button className="btn btn-secondary">
+                Ver más sobre el Producto
+              </button>
+            </Link>
           </div>
         ))}
       </div>

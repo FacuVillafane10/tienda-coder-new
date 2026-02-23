@@ -214,3 +214,122 @@ h1 {
   gap: 8px;
   margin-top: 20px;
 }
+/* Estilos generales para asegurar que el navbar se quede fijo */
+.pf-navbar {
+  font-family: 'DM Sans', sans-serif;
+  background-color: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1.5px solid rgba(32, 166, 144, 0.18);
+  box-shadow: var(--pf-shadow);
+  padding: 0 36px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  top: 0;
+  z-index: 1000;
+  position: fixed; /* Fija el navbar en la parte superior */
+  width: 100%; /* Hace que ocupe todo el ancho de la pantalla */
+  left: 0;
+  right: 0;
+  height: auto; /* La altura se ajustará automáticamente al contenido del logo */
+}
+
+/* Ajuste para el logo */
+.pf-navbar__logo {
+  max-height: 80px; /* Ajuste la altura máxima del logo */
+  height: auto; /* La altura se ajustará automáticamente */
+  transition: transform var(--pf-ease), opacity var(--pf-ease);
+}
+
+.pf-navbar__logo-link {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* Asegura que el contenido no se sobreponga al navbar */
+body {
+  padding-top: 80px; /* Agrega espacio para que el contenido no se superponga al navbar fijo */
+}
+
+/* Mantener el resto de estilos de los botones y enlaces */
+.pf-nav-link {
+  color: var(--pf-text);
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 500;
+  padding: 7px 15px;
+  border-radius: var(--pf-radius);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: background var(--pf-ease), color var(--pf-ease);
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.pf-nav-link:hover,
+.pf-nav-link:focus-visible {
+  background-color: var(--pf-accent-light);
+  color: var(--pf-accent);
+  text-decoration: none;
+}
+
+.pf-nav-link--active {
+  background-color: var(--pf-accent);
+  color: #ffffff !important;
+}
+
+.pf-nav-link--active:hover {
+  background-color: var(--pf-accent-dark);
+  color: #ffffff;
+}
+
+.pf-cart-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--pf-accent);
+  color: #ffffff !important;
+  text-decoration: none;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 9px 20px;
+  border-radius: 50px;
+  position: relative;
+  transition: background var(--pf-ease), transform var(--pf-ease), box-shadow var(--pf-ease);
+  box-shadow: 0 4px 14px rgba(32, 166, 144, 0.3);
+  white-space: nowrap;
+}
+
+.pf-cart-btn:hover {
+  background-color: var(--pf-accent-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(32, 166, 144, 0.4);
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.pf-cart-btn:active {
+  transform: translateY(0);
+}
+
+.pf-cart-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  color: var(--pf-accent);
+  font-size: 0.7rem;
+  font-weight: 700;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  line-height: 1;
+}

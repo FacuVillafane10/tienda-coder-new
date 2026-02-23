@@ -29,8 +29,8 @@ function App() {
             element={<ItemDetail />}  
           />
           <Route 
-            path='/categorias/:categoria'  // Ruta para filtrar productos por categoría
-            element={<ItemListContainer message="Productos por categoría" />} 
+            path='/categorias/:categoria'  
+            element={<ItemListContainer  message="Productos por categoría" />} 
           />
           <Route path='/cart' element={<CartWidget />} />
           <Route path='/nosotros' element={<Nosotros />} /> 
