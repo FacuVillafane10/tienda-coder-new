@@ -70,7 +70,7 @@ body {
 }
 
 .item-card h3 {
-  font-size: 1.2em;
+  font-size: 1.8em;
   color: #333;
   margin: 10px 0;
   font-weight: 600;
@@ -214,6 +214,7 @@ h1 {
   gap: 8px;
   margin-top: 20px;
 }
+
 /* Estilos generales para asegurar que el navbar se quede fijo */
 .pf-navbar {
   font-family: 'DM Sans', sans-serif;

@@ -76,7 +76,7 @@ const linkWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(
                   <div className="col-md-3">
                     <img 
                       src={producto.foto} 
-                      className="img-fluid rounded-start" 
+                      className="img-fluid rounded-start container-fluid" 
                       alt={producto.nombre}
                       style={{ height: '150px', objectFit: 'cover' }}
                     />
@@ -103,17 +103,17 @@ const linkWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(
                         <label className="me-2">Cantidad:</label>
                         <div className="btn-group" role="group">
                           <button 
-                            className="btn btn-outline-secondary btn-sm"
+                            className="btn btn-outline-dark btn-sm"
                             onClick={() => updateQuantity(producto.id, -1)}
                             disabled={(producto.quantity || 1) <= 1}
                           >
-                            <i className="bi bi-dash-lg"></i>
+                            <i className="bi bi-dash-lg text-dark "></i>
                           </button>
-                          <span className="btn btn-outline-secondary btn-sm disabled">
+                          <span className="btn btn-outline-dark btn-sm ">
                             {producto.quantity || 1}
                           </span>
                           <button 
-                            className="btn btn-outline-secondary btn-sm text-black"
+                            className="btn btn-outline-dark btn-sm text-black"
                             onClick={() => updateQuantity(producto.id, 1)}
                           >
                             <i className="bi bi-plus-lg text-black"></i>

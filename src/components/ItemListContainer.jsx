@@ -43,8 +43,8 @@ function ItemListContainer({ message }) {
   if (error) return <p>{error}</p>;
 
   return (
-    <div>
-      <h3 className="d-flex justify-content-center">{message}</h3>
+    <div className="d-flex flex-wrap justify-content-center">
+      <h3 className="text-center ">{message}</h3>
       <div className="item-list">
         {productos.length === 0 && <p>No se encontraron productos en esta categoría</p>}
         {productos.map((comida) => (
