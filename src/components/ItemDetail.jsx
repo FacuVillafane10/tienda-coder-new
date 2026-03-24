@@ -7,25 +7,45 @@ import { db } from '../assets/service/firebase';
 const ItemDetail = () => {
   const { id } = useParams(); 
   const { addToCart } = useContext(CartContext);
+
+  // Estados para producto, cantidad, carga y errores
   const [producto, setProducto] = useState(null);
   const [quantity, setQuantity] = useState(1);
-  
+  const [loading, setLoading] = useState(true); // Estado de carga
+  const [notFound, setNotFound] = useState(false); // Estado de "no encontrado"
+  const [error, setError] = useState(null); // Estado de error
+
   useEffect(() => {
     const fetchProduct = async () => {
-      const docRef = doc(db, "productos", id); 
-      const docSnap = await getDoc(docRef); 
+      try {
+        setLoading(true); // Empieza a cargar el producto
+        const docRef = doc(db, "productos", id);
+        const docSnap = await getDoc(docRef);
 
-      if (docSnap.exists()) {
-        setProducto({ id: docSnap.id, ...docSnap.data() }); 
-      } else {
-        console.log("No se encontró el producto!");
+        if (docSnap.exists()) {
+          setProducto({ id: docSnap.id, ...docSnap.data() });
+          setNotFound(false); // Si existe, no está "no encontrado"
+        } else {
+          setNotFound(true);// Si no existe el producto
+        }
+      } catch (error) {
+        setError("Hubo un problema al cargar el producto.");
+        console.error(error);
+      } finally {
+        setLoading(false); // Deja de cargar
       }
     };
 
     fetchProduct();
-  }, [id]); 
+  }, [id]);
 
-  if (!producto) {
+  // Mientras se está cargando
+  if (loading) {
+    return <div className="container mt-5 text-center">Cargando...</div>;
+  }
+
+  // Si no se encuentra el producto
+  if (notFound) {
     return (
       <div className="container mt-5 text-center">
         <div className="alert alert-warning">
@@ -38,10 +58,29 @@ const ItemDetail = () => {
     );
   }
 
+  // Si hubo un error
+  if (error) {
+    return (
+      <div className="container mt-5 text-center">
+        <div className="alert alert-danger">
+          <h3>{error}</h3>
+          <Link to="/" className="btn btn-primary mt-3">
+            Volver al Inicio
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  // Función para agregar al carrito
   const handleAddToCart = () => {
-    addToCart({ ...producto, quantity }); // Agregar el producto con la cantidad seleccionada
-    alert(`${quantity} ${producto.nombre}(s) agregado(s) al carrito`);
-    setQuantity(1); // Reiniciar cantidad a 1 después de agregar al carrito
+    if (producto.stock && quantity > producto.stock) {
+      alert(`No podemos agregar más de ${producto.stock} unidades de este producto.`);
+      return;
+    }
+
+    addToCart({ ...producto, quantity });
+    setQuantity(1); // Reiniciar cantidad
   };
 
   const increaseQuantity = () => setQuantity(prev => prev + 1);
@@ -63,7 +102,7 @@ const ItemDetail = () => {
             <strong>Descripción:</strong>
           </p>
           <p>{producto.descripcion}</p>
-          
+
           <div className="mt-4">
             <label className="me-3"><strong>Cantidad:</strong></label>
             <div className="btn-group mb-3 bg-white" role="group">
