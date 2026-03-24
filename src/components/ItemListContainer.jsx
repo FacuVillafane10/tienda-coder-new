@@ -1,8 +1,10 @@
-import { Link, useParams } from 'react-router-dom';  // Agregado useParams
+import { Link, useParams } from 'react-router-dom';
 import { useContext, useState, useEffect } from 'react';
 import { CartContext } from './CartContext';
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from '../assets/service/firebase';
+import './ItemListContainer.css';
+
 
 function ItemListContainer({ message }) {
   const { categoria } = useParams();  // Obtener el parámetro de la categoría desde la URL
@@ -43,28 +45,34 @@ function ItemListContainer({ message }) {
   if (error) return <p>{error}</p>;
 
   return (
-    <div className="d-flex flex-wrap justify-content-center">
-      <h3 className="text-center ">{message}</h3>
-      <div className="item-list">
+    <div className="container mt-4">
+      <h3 className="text-center mb-4 mt-4">{message}</h3>
+      <div className="row justify-content-center">
         {productos.length === 0 && <p>No se encontraron productos en esta categoría</p>}
         {productos.map((comida) => (
-          <div key={comida.id} className="item-card">
-            <img src={comida.foto} alt={comida.nombre} />
-            <h3>{comida.nombre}</h3>
-            <p className="descripcion-producto">{comida.descripcion}</p>
-            
-            <button 
-              className="btn btn-primary mb-2"
-              onClick={() => handleAddToCart(comida)} 
-            >
-              Agregar al carrito
-            </button>
-            
-            <Link to={`/product/${comida.id}`}>
-              <button className="btn btn-secondary">
-                Ver más sobre el Producto
-              </button>
-            </Link>
+          <div key={comida.id} className="col-lg-3 col-md-4 col-sm-6 mb-4">
+            <div className="item-card shadow-lg rounded-3 p-3">
+              <img
+                src={comida.foto}
+                alt={comida.nombre}
+                className="img-fluid rounded-3 mb-3"
+              />
+              <h5 className="text-center">{comida.nombre}</h5>
+              <p className="descripcion-producto text-muted">{comida.descripcion}</p>
+              <div className="d-flex justify-content-between">
+                <button
+                  className="btn btn-primary w-100"
+                  onClick={() => handleAddToCart(comida)}
+                >
+                  Agregar al carrito
+                </button>
+                <Link to={`/product/${comida.id}`} className="w-100 mt-2">
+                  <button className="btn btn-outline-secondary w-100">
+                    Ver más
+                  </button>
+                </Link>
+              </div>
+            </div>
           </div>
         ))}
       </div>

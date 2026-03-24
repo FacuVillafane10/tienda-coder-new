@@ -1,0 +1,153 @@
+/* =============================================
+   RESET & BASE
+   ============================================= */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  min-height: 100vh;
+  width: 100%;
+  background-color: #2f9a6d;  /* Color de fondo suave y limpio */
+  color: #333;  /* Texto oscuro para mayor legibilidad */
+}
+
+/* =============================================
+   CARDS
+   ============================================= */
+.item-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);  /* Sombra sutil */
+  background: linear-gradient(145deg, #ffffff, #f1f1f1);  /* Fondo suave con un toque de gradiente */
+}
+
+.item-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);  /* Sombra más pronunciada al hacer hover */
+}
+
+.item-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+  transition: transform 0.3s ease;  /* Efecto suave para la imagen */
+}
+
+.item-card img:hover {
+  transform: scale(1.05);  /* Zoom suave en la imagen al pasar el mouse */
+}
+
+.item-card h5 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-top: 15px;
+  color: #2c3e50;  /* Título de producto en color oscuro */
+}
+
+.descripcion-producto {
+  color: #7f8c8d;  /* Descripción en un tono gris suave */
+  font-size: 0.9rem;
+  margin: 10px 0;
+  text-align: center;
+}
+
+/* =============================================
+   BOTONES
+   ============================================= */
+button {
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 12px 0;
+  border-radius: 8px;
+  width: 100%;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+/* Botón principal (Agregar al carrito) */
+.btn-primary {
+  background-color: #20a690;
+  color: #fff;
+  border: none;
+  font-weight: 600;
+  border-radius: 25px;  /* Bordes redondeados para un toque moderno */
+}
+
+.btn-primary:hover {
+  background-color: #178a76;
+  transform: translateY(-2px);  /* Efecto sutil de hover */
+}
+
+/* Botón secundario (Ver más) */
+.btn-outline-secondary {
+  background-color: transparent;
+  color: #20a690;
+  border: 2px solid #20a690;
+  font-weight: 600;
+}
+
+.btn-outline-secondary:hover {
+  background-color: #20a690;
+  color: #fff;
+}
+
+/* =============================================
+   LAYOUT RESPONSIVO
+   ============================================= */
+@media (max-width: 768px) {
+  /* Cambiar el padding y el tamaño de las imágenes en pantallas más pequeñas */
+  .item-card {
+    padding: 15px;
+  }
+
+  .item-card img {
+    height: 180px;
+  }
+  
+  button {
+    font-size: 0.85rem;
+  }
+}
+
+/* ============================
+   GRID LAYOUT DE PRODUCTOS
+   ============================ */
+.item-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));  /* Grid flexible para varias columnas */
+  gap: 20px;
+  justify-items: center;  /* Centra las tarjetas dentro del grid */
+  margin-top: 30px;
+  padding: 0 20px;
+}
+
+.item-list p {
+  text-align: center;
+  font-size: 1rem;
+  color: #7f8c8d;
+}
+
+/* ============================
+   TÍTULOS Y SECCIÓN PRINCIPAL
+   ============================ */
+h3 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 30px;
+  text-align: center;
+  color: #2c3e50;  /* Título en color oscuro */
+}

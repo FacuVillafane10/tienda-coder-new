@@ -1,270 +1,263 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
 
 :root {
-  --pf-accent:        #20a690;
-  --pf-accent-dark:   #178a76;
-  --pf-accent-light:  rgba(32, 166, 144, 0.12);
-  --pf-text:          #1a2e2b;
-  --pf-shadow:        0 2px 20px rgba(0, 0, 0, 0.07);
-  --pf-radius:        10px;
-  --pf-ease:          0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  --pf-accent: #20a690;
+  --pf-accent-dark: #178a76;
+  --pf-accent-light: rgba(32, 166, 144, 0.12);
+  --pf-text: #1a2e2b;
+  --pf-text-soft: #4a5c59;
+  --pf-white: #ffffff;
+  --pf-border: rgba(32, 166, 144, 0.14);
+  --pf-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  --pf-radius: 16px;
+  --pf-radius-sm: 12px;
+  --pf-ease: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* contenedor general */
 .pf-navbar {
   font-family: 'DM Sans', sans-serif;
-  background-color: rgba(255, 255, 255, 0.94);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-bottom: 1.5px solid rgba(32, 166, 144, 0.18);
-  box-shadow: var(--pf-shadow);
-  height: 68px;
-  padding: 0 36px;
-  display: flex;
-  align-items: center;
-  gap: 24px;  
+  position: sticky;
   top: 0;
   z-index: 1000;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--pf-border);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+  padding: 12px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
-
-.pf-navbar__logo-link {
+/* fila superior */
+.pf-navbar__top {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.pf-navbar__logo-link {
+  display: inline-flex;
+  align-items: center;
   flex-shrink: 0;
+  text-decoration: none;
 }
 
 .pf-navbar__logo {
-  width: 100px;
+  width: 84px;
   height: auto;
+  display: block;
   transition: transform var(--pf-ease), opacity var(--pf-ease);
 }
 
 .pf-navbar__logo:hover {
-  transform: scale(1.04);
-  opacity: 0.88;
+  transform: scale(1.03);
+  opacity: 0.9;
 }
 
-
-.pf-navbar__links {
+/* acciones */
+.pf-navbar__actions {
   display: flex;
   align-items: center;
-  gap: 2px;
-  flex: 1; 
+  justify-content: flex-end;
 }
 
-.pf-nav-link {
-  color: var(--pf-text);
+.pf-cart-btn {
+  min-height: 42px;
+  padding: 0 16px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--pf-accent), var(--pf-accent-dark));
+  color: var(--pf-white) !important;
   text-decoration: none;
   font-size: 0.88rem;
-  font-weight: 500;
-  padding: 7px 15px;
-  border-radius: var(--pf-radius);
+  font-weight: 700;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  transition: background var(--pf-ease), color var(--pf-ease);
-  letter-spacing: 0.01em;
-  white-space: nowrap;
-  background: transparent;
-  border: none;
-  cursor: pointer;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 8px 18px rgba(32, 166, 144, 0.24);
+  transition: transform var(--pf-ease), box-shadow var(--pf-ease), filter var(--pf-ease);
+}
+
+.pf-cart-btn:hover {
+  color: var(--pf-white) !important;
+  text-decoration: none;
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(32, 166, 144, 0.3);
+  filter: brightness(1.02);
+}
+
+.pf-cart-badge {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--pf-white);
+  color: var(--pf-accent);
+  font-size: 0.72rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   line-height: 1;
 }
 
-.pf-nav-link:hover,
-.pf-nav-link:focus-visible {
-  background-color: var(--pf-accent-light);
-  color: var(--pf-accent);
+/* links */
+.pf-navbar__links {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+  width: 100%;
+}
+
+.pf-dropdown {
+  width: 100%;
+}
+
+.pf-nav-link,
+.pf-nav-link--button {
+  width: 100%;
+  min-height: 42px;
+  padding: 0 14px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  background: #f7fbfa;
+  color: var(--pf-text);
+  font-size: 0.85rem;
+  font-weight: 600;
   text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  white-space: nowrap;
+  transition: all var(--pf-ease);
+  box-shadow: none;
+}
+
+.pf-nav-link--button {
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+}
+
+.pf-nav-link:hover,
+.pf-nav-link--button:hover,
+.pf-nav-link:focus-visible,
+.pf-nav-link--button:focus-visible {
+  background: var(--pf-accent-light);
+  color: var(--pf-accent);
+  border-color: rgba(32, 166, 144, 0.12);
+  text-decoration: none;
+  outline: none;
 }
 
 .pf-nav-link--active {
-  background-color: var(--pf-accent);
-  color: #ffffff !important;
+  background: var(--pf-accent);
+  color: var(--pf-white) !important;
+  box-shadow: 0 8px 18px rgba(32, 166, 144, 0.18);
 }
 
 .pf-nav-link--active:hover {
-  background-color: var(--pf-accent-dark);
-  color: #ffffff;
+  background: var(--pf-accent-dark);
+  color: var(--pf-white) !important;
 }
 
-.pf-nav-link--dropdown::after {
-  margin-left: 4px;
-  opacity: 0.7;
-}
-
-/* ── Dropdown menu ── */
+/* dropdown */
 .pf-dropdown-menu {
-  border: 1.5px solid rgba(32, 166, 144, 0.2) !important;
-  border-radius: var(--pf-radius) !important;
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.1) !important;
-  padding: 6px !important;
-  min-width: 190px;
+  border: 1px solid var(--pf-border) !important;
+  border-radius: 14px !important;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.12) !important;
+  padding: 8px !important;
+  min-width: 220px;
+  margin-top: 8px !important;
   animation: pfFadeDown 0.18s ease forwards;
 }
 
 .pf-dropdown-item {
   font-family: 'DM Sans', sans-serif !important;
-  font-size: 0.875rem !important;
+  font-size: 0.9rem !important;
+  font-weight: 500 !important;
   color: var(--pf-text) !important;
-  border-radius: 7px !important;
-  padding: 9px 13px !important;
+  border-radius: 10px !important;
+  padding: 10px 12px !important;
   transition: background var(--pf-ease), color var(--pf-ease) !important;
 }
 
 .pf-dropdown-item:hover,
 .pf-dropdown-item:focus {
-  background-color: var(--pf-accent-light) !important;
+  background: var(--pf-accent-light) !important;
   color: var(--pf-accent) !important;
 }
 
 @keyframes pfFadeDown {
-  from { opacity: 0; transform: translateY(-6px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-/* ── Carrito ── */
-.pf-navbar__actions {
-  flex-shrink: 0;
-}
-
-.pf-cart-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background-color: var(--pf-accent);
-  color: #ffffff !important;
-  text-decoration: none;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.875rem;
-  font-weight: 600;
-  padding: 9px 20px;
-  border-radius: 50px;
-  position: relative;
-  transition: background var(--pf-ease), transform var(--pf-ease), box-shadow var(--pf-ease);
-  box-shadow: 0 4px 14px rgba(32, 166, 144, 0.3);
-  white-space: nowrap;
-}
-
-.pf-cart-btn:hover {
-  background-color: var(--pf-accent-dark);
-  transform: translateY(-1px);
-  box-shadow: 0 6px 18px rgba(32, 166, 144, 0.4);
-  color: #ffffff;
-  text-decoration: none;
-}
-
-.pf-cart-btn:active {
-  transform: translateY(0);
-}
-
-.pf-cart-badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #ffffff;
-  color: var(--pf-accent);
-  font-size: 0.7rem;
-  font-weight: 700;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  line-height: 1;
-}
-
-@media (max-width: 768px) {
+/* tablet y escritorio */
+@media (min-width: 769px) {
   .pf-navbar {
-    height: auto;
-    flex-wrap: wrap;
-    padding: 12px 16px;
-    gap: 10px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 28px;
+    gap: 18px;
+  }
+
+  .pf-navbar__top {
+    flex-shrink: 0;
+    gap: 16px;
   }
 
   .pf-navbar__links {
-    width: 100%;
-    flex-wrap: wrap;
-    gap: 4px;
+    max-width: 520px;
+    margin: 0 auto;
   }
 
   .pf-navbar__actions {
-    width: 100%;
+    flex-shrink: 0;
+  }
+
+  .pf-navbar__logo {
+    width: 96px;
+  }
+}
+
+/* móvil angosto */
+@media (max-width: 420px) {
+  .pf-navbar {
+    padding: 10px 12px;
+    gap: 10px;
+  }
+
+  .pf-navbar__logo {
+    width: 72px;
   }
 
   .pf-cart-btn {
-    width: 100%;
-    justify-content: center;
+    min-height: 38px;
+    padding: 0 12px;
+    font-size: 0.78rem;
+  }
+
+  .pf-navbar__links {
+    gap: 6px;
+  }
+
+  .pf-nav-link,
+  .pf-nav-link--button {
+    min-height: 38px;
+    padding: 0 8px;
+    font-size: 0.74rem;
+    gap: 4px;
   }
 }
-.pf-navbar {
-  font-family: 'DM Sans', sans-serif;
-  background-color: rgba(255, 255, 255, 0.94);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-bottom: 1.5px solid rgba(32, 166, 144, 0.18);
-  box-shadow: var(--pf-shadow);
-  padding: 0 36px;
-  display: flex;
-  align-items: center;  
-  gap: 24px;
-  top: 0;
-  z-index: 1000;
-  height: auto;
-}
-
-.pf-navbar__logo-link {
-  display: flex;
-  align-items: center;
-  flex-shrink: 0;
-}
-
-.pf-navbar__logo {
-  max-height: 100px; 
-  height: auto;
-  transition: transform var(--pf-ease), opacity var(--pf-ease);
-}
-
-.pf-navbar__logo:hover {
-  transform: scale(1.04);
-  opacity: 0.88;
-}
-.pf-navbar {
-  font-family: 'DM Sans', sans-serif;
-  background-color: rgba(255, 255, 255, 0.94);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-bottom: 1.5px solid rgba(32, 166, 144, 0.18);
-  box-shadow: var(--pf-shadow);
-  padding: 0 36px;
-  display: flex;
-  align-items: center; 
-  gap: 24px;
-  top: 0;
-  z-index: 1000;
-  height: auto; 
-}
-
-.pf-navbar__logo-link {
-  display: flex;
-  align-items: center;
-  flex-shrink: 0;
-}
-
-.pf-navbar__logo {
-  max-height: 80px; 
-  height: auto;
-  transition: transform var(--pf-ease), opacity var(--pf-ease);
-}
-
-.pf-navbar__logo:hover {
-  transform: scale(1.04);
-  opacity: 0.88;
-}
-
-.pf-navbar__links {
-  display: flex;
-  align-items: center;
-  gap: 2px;
-  flex: 1;
-}
-

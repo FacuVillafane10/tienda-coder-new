@@ -3,21 +3,35 @@ import { Link, useLocation } from 'react-router-dom';
 import { CartContext } from './CartContext';
 import './NavBar.css';
 
-function NavBar({ message }) {
+function NavBar() {
   const location = useLocation();
   const { cart } = useContext(CartContext);
+
   const totalItems = cart.reduce((total, item) => total + (item.quantity || 1), 0);
 
   const isActive = (path) => location.pathname === path;
+  const isCategoryActive = location.pathname.startsWith('/categorias');
 
   return (
     <nav className="pf-navbar">
-      {/* Logo */}
-      <Link to="/" className="pf-navbar__logo-link" aria-label="Ir al inicio">
-        <img src="/logoPau.ico" alt="Paula Foods Logo" className="pf-navbar__logo" />
-      </Link>
+      <div className="pf-navbar__top">
+        <Link to="/" className="pf-navbar__logo-link" aria-label="Ir al inicio">
+          <img
+            src="/logoPau.ico"
+            alt="Paula Foods Logo"
+            className="pf-navbar__logo"
+          />
+        </Link>
 
-      {/* Links de navegación */}
+        <div className="pf-navbar__actions">
+          <Link to="/cart" className="pf-cart-btn" aria-label="Ir al carrito de compras">
+            <i className="bi bi-cart3"></i>
+            <span>Carrito</span>
+            {totalItems > 0 && <span className="pf-cart-badge">{totalItems}</span>}
+          </Link>
+        </div>
+      </div>
+
       <div className="pf-navbar__links">
         <Link
           to="/"
@@ -25,45 +39,35 @@ function NavBar({ message }) {
           aria-label="Ir a la página de inicio"
         >
           <i className="bi bi-house-door-fill"></i>
-          Inicio
+          <span>Inicio</span>
         </Link>
 
-        {/* Dropdown Categorías */}
-        <div className="dropdown">
+        <div className="dropdown pf-dropdown">
           <button
-            className="pf-nav-link pf-nav-link--dropdown dropdown-toggle"
+            className={`pf-nav-link pf-nav-link--button dropdown-toggle ${
+              isCategoryActive ? 'pf-nav-link--active' : ''
+            }`}
             type="button"
             data-bs-toggle="dropdown"
             aria-expanded="false"
             aria-label="Abrir menú de categorías"
           >
-            Categorías
+            <span>Categorías</span>
           </button>
+
           <ul className="dropdown-menu pf-dropdown-menu">
             <li>
-              <Link
-                className="dropdown-item pf-dropdown-item"
-                to="/categorias/comidarapida"
-                aria-label="Ir a comidas rápidas"
-              >
+              <Link className="dropdown-item pf-dropdown-item" to="/categorias/comidarapida">
                 🍔 Comidas Rápidas
               </Link>
             </li>
             <li>
-              <Link
-                className="dropdown-item pf-dropdown-item"
-                to="/categorias/saludables"
-                aria-label="Ir a opciones saludables"
-              >
+              <Link className="dropdown-item pf-dropdown-item" to="/categorias/saludables">
                 🥗 Saludables
               </Link>
             </li>
             <li>
-              <Link
-                className="dropdown-item pf-dropdown-item"
-                to="/categorias/menudiario"
-                aria-label="Ver menú diario"
-              >
+              <Link className="dropdown-item pf-dropdown-item" to="/categorias/menudiario">
                 🍽️ Menú Diario
               </Link>
             </li>
@@ -76,22 +80,7 @@ function NavBar({ message }) {
           aria-label="Ir a la sección de nosotros"
         >
           <i className="bi bi-person-circle"></i>
-          Nosotros
-        </Link>
-      </div>
-
-      {/* Botón Carrito */}
-      <div className="pf-navbar__actions">
-        <Link
-          to="/cart"
-          className="pf-cart-btn"
-          aria-label="Ir al carrito de compras"
-        >
-          <i className="bi bi-cart3"></i>
-          <span>Carrito</span>
-          {totalItems > 0 && (
-            <span className="pf-cart-badge">{totalItems}</span>
-          )}
+          <span>Nosotros</span>
         </Link>
       </div>
     </nav>
