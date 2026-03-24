@@ -3,6 +3,7 @@ import { useContext, useState, useEffect } from 'react';
 import { CartContext } from './CartContext';
 import { doc, getDoc } from "firebase/firestore";
 import { db } from '../assets/service/firebase'; 
+//import './ItemDetail.css'
 
 const ItemDetail = () => {
   const { id } = useParams(); 

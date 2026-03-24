@@ -5,12 +5,12 @@ import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from '../assets/service/firebase';
 import './ItemListContainer.css';
 
-
 function ItemListContainer({ message }) {
   const { categoria } = useParams();  // Obtener el parámetro de la categoría desde la URL
   const { addToCart } = useContext(CartContext);  // Accedemos a la función addToCart
   const [productos, setProductos] = useState([]);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);  // Agregamos el estado loading
 
   const handleAddToCart = (comida) => {
     addToCart(comida);  // Llamamos a la función para agregar al carrito
@@ -36,18 +36,24 @@ function ItemListContainer({ message }) {
       } catch (error) {
         setError('Error al obtener productos');
         console.error("Error obteniendo productos de Firebase: ", error);
+      } finally {
+        setLoading(false);  // Una vez que los datos están listos, cambia el estado a false
       }
     };
 
     fetchProducts();
   }, [categoria]);  // Filtra nuevamente si la categoría cambia
 
+  if (loading) {
+    return <div className="text-center">Cargando...</div>;  // Mostrar "Cargando..." mientras se obtiene la data
+  }
+
   if (error) return <p>{error}</p>;
 
   return (
     <div className="container mt-4">
-      <h3 className="text-center mb-4 mt-4">{message}</h3>
-      <div className="row justify-content-center">
+      <h3 className="text-center mb-4 mt-4 text-black">{message}</h3>
+      <div className="row justify-content-center ">
         {productos.length === 0 && <p>No se encontraron productos en esta categoría</p>}
         {productos.map((comida) => (
           <div key={comida.id} className="col-lg-3 col-md-4 col-sm-6 mb-4">

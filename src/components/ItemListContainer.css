@@ -151,3 +151,114 @@ h3 {
   text-align: center;
   color: #2c3e50;  /* Título en color oscuro */
 }
+
+/* =============================================
+   CARGANDO (spinner) ESTILIZADO
+   ============================================= */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;  /* Centra verticalmente el spinner */
+}
+
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
+  border-width: 0.3rem;
+}
+
+p {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333;
+  margin-top: 15px;
+}
+
+/* =============================================
+   CARDS
+   ============================================= */
+.item-card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+}
+
+.item-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.item-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.item-card h5 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+.descripcion-producto {
+  color: #6c757d;
+  font-size: 0.9rem;
+  margin: 10px 0;
+}
+
+/* =============================================
+   BOTONES
+   ============================================= */
+button {
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 10px 0;
+  border-radius: 8px;
+}
+
+.btn-primary {
+  background-color: #20a690;
+  color: #fff;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #178a76;
+}
+
+.btn-outline-secondary {
+  background-color: transparent;
+  color: #20a690;
+  border: 1px solid #20a690;
+}
+
+.btn-outline-secondary:hover {
+  background-color: #20a690;
+  color: #fff;
+}
+
+/* =============================================
+   LAYOUT RESPONSIVO
+   ============================================= */
+@media (max-width: 768px) {
+  .item-card {
+    padding: 15px;
+  }
+
+  .item-card img {
+    height: 160px;
+  }
+  
+  button {
+    font-size: 0.8rem;
+  }
+}
