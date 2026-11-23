@@ -5,6 +5,69 @@ import { db } from '../assets/service/firebase';
 import { CartContext } from './CartContext';
 import { nombreCategoria } from '../utils/categorias';
 import { formatearPrecio, tienePrecio, estaDisponible, limpiarDescripcion } from '../utils/formato';
+import { obtenerFotos, imagenesParaMostrar } from '../utils/fotos';
+
+// Foto grande con flechas, deslizamiento en el celular y miniaturas abajo
+const Galeria = ({ imagenes, nombre }) => {
+  const [actual, setActual] = useState(0);
+  const [inicioToque, setInicioToque] = useState(null);
+  const total = imagenes.length;
+  const indice = Math.min(actual, total - 1);
+
+  const ir = (paso) => setActual((i) => (i + paso + total) % total);
+
+  const alSoltar = (e) => {
+    if (inicioToque === null) return;
+    const distancia = e.changedTouches[0].clientX - inicioToque;
+    if (Math.abs(distancia) > 40) ir(distancia < 0 ? 1 : -1);
+    setInicioToque(null);
+  };
+
+  if (total === 0) {
+    return <div className="detalle__foto" aria-hidden="true" />;
+  }
+
+  return (
+    <div className="galeria">
+      <div
+        className="galeria__principal"
+        onTouchStart={(e) => setInicioToque(e.touches[0].clientX)}
+        onTouchEnd={alSoltar}
+      >
+        <img className="detalle__foto" src={imagenes[indice]} alt={total > 1 ? `${nombre}, foto ${indice + 1} de ${total}` : nombre} />
+        {total > 1 && (
+          <>
+            <button type="button" className="galeria__flecha galeria__flecha--izq" onClick={() => ir(-1)} aria-label="Foto anterior">
+              <i className="bi bi-chevron-left" aria-hidden="true"></i>
+            </button>
+            <button type="button" className="galeria__flecha galeria__flecha--der" onClick={() => ir(1)} aria-label="Foto siguiente">
+              <i className="bi bi-chevron-right" aria-hidden="true"></i>
+            </button>
+            <span className="galeria__contador">{indice + 1} / {total}</span>
+          </>
+        )}
+      </div>
+
+      {total > 1 && (
+        <div className="galeria__miniaturas" role="tablist" aria-label="Fotos">
+          {imagenes.map((src, i) => (
+            <button
+              key={i}
+              type="button"
+              role="tab"
+              aria-selected={i === indice}
+              aria-label={`Ver foto ${i + 1}`}
+              className={`galeria__miniatura ${i === indice ? 'galeria__miniatura--activa' : ''}`}
+              onClick={() => setActual(i)}
+            >
+              <img src={src} alt="" loading="lazy" />
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
 
 const ItemDetail = () => {
   const { id } = useParams();
@@ -14,6 +77,7 @@ const ItemDetail = () => {
   const [cantidad, setCantidad] = useState(1);
   const [estado, setEstado] = useState('cargando'); // cargando | listo | no-existe | error
   const [agregado, setAgregado] = useState(0);
+  const [imagenes, setImagenes] = useState([]);
 
   useEffect(() => {
     const obtenerProducto = async () => {
@@ -21,8 +85,14 @@ const ItemDetail = () => {
       try {
         const snap = await getDoc(doc(db, 'productos', id));
         if (snap.exists()) {
-          setProducto({ id: snap.id, ...snap.data() });
+          const datos = snap.data();
+          setProducto({ id: snap.id, ...datos });
+          setImagenes(datos.foto ? [datos.foto] : []);
           setEstado('listo');
+          // La galería se carga después: la portada ya se muestra mientras tanto
+          obtenerFotos(snap.id)
+            .then((galeria) => setImagenes(imagenesParaMostrar(datos.foto, galeria)))
+            .catch(() => {});
         } else {
           setEstado('no-existe');
         }
@@ -76,7 +146,7 @@ const ItemDetail = () => {
       </Link>
 
       <div className="detalle">
-        <img className="detalle__foto" src={producto.foto} alt={producto.nombre} />
+        <Galeria key={producto.id} imagenes={imagenes} nombre={producto.nombre} />
 
         <div className="detalle__info">
           {producto.categoria && <span className="etiqueta-seccion">{nombreCategoria(producto.categoria)}</span>}

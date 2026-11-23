@@ -26,6 +26,18 @@ service cloud.firestore {
       allow read: if true;
       allow create, update: if esAdmin() && productoValido();
       allow delete: if esAdmin();
+
+      // Galería de fotos de cada comida (hasta 6, controlado en el panel)
+      match /fotos/{fotoId} {
+        allow read: if true;
+        allow create, update: if esAdmin()
+          && request.resource.data.keys().hasOnly(['imagen', 'orden'])
+          && request.resource.data.imagen is string
+          && request.resource.data.imagen.size() > 0
+          && request.resource.data.imagen.size() < 900000
+          && request.resource.data.orden is number;
+        allow delete: if esAdmin();
+      }
     }
 
     match /config/tienda {

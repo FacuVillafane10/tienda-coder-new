@@ -20,12 +20,13 @@ Proyecto final del curso de React de Coderhouse.
 
 En `/admin`, con email y contraseña, se puede:
 
-- Editar nombre, precio, descripción, categoría y foto de cada comida.
+- Editar nombre, precio, descripción y categoría de cada comida.
+- Subir hasta **6 fotos** por comida (varias a la vez), ordenarlas y elegir cuál es la **portada**. El menú muestra la portada y el detalle muestra la galería completa.
 - Agregar comidas nuevas y borrar las que ya no se hacen.
 - Pausar una comida con el interruptor **Disponible**: deja de verse en la tienda sin perderla.
 - Cambiar el número de WhatsApp que recibe los pedidos.
 
-Las fotos se achican en el navegador (800 px, WebP, ~100 KB) y se guardan dentro del mismo documento de Firestore, sin necesidad de Firebase Storage.
+Las fotos se achican en el navegador (800 px, WebP, ~50-100 KB) y se guardan en Firestore, sin necesidad de Firebase Storage: la portada en el documento de la comida y la galería en la subcolección `productos/{id}/fotos` (un documento por foto), que se carga solo al abrir el detalle.
 
 ### Seguridad
 

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { collection, deleteDoc, doc, getDocs, setDoc } from 'firebase/firestore';
+import { collection, doc, getDocs, setDoc, writeBatch } from 'firebase/firestore';
+import { fotosRef, obtenerFotos } from '../utils/fotos';
 import { db } from '../assets/service/firebase';
 import { CATEGORIAS, nombreCategoria } from '../utils/categorias';
 import { formatearPrecio, estaDisponible } from '../utils/formato';
@@ -108,7 +109,12 @@ const Panel = () => {
       return;
     }
     try {
-      await deleteDoc(doc(db, 'productos', producto.id));
+      // Se borran juntas la comida y su galería de fotos
+      const galeria = await obtenerFotos(producto.id);
+      const lote = writeBatch(db);
+      galeria.forEach((f) => lote.delete(doc(fotosRef(producto.id), f.id)));
+      lote.delete(doc(db, 'productos', producto.id));
+      await lote.commit();
       setProductos((lista) => lista.filter((p) => p.id !== producto.id));
     } catch (err) {
       setError(mensajeErrorFirestore(err));
