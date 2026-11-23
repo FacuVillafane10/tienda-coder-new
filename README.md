@@ -1,16 +1,31 @@
 # Paula Foods · Tienda online de comida casera
 
-Tienda online para un emprendimiento de comida casera: catálogo por categorías, detalle de cada producto, carrito de compras y envío del pedido por WhatsApp.
+Tienda online **en uso real** para un emprendimiento de comida casera de Córdoba: los clientes eligen del menú, arman su pedido y lo confirman por WhatsApp; la dueña administra comidas, precios y fotos desde su propio panel, sin tocar código.
 
-**Ver sitio:** https://paulafoods.netlify.app/
+**[Ver el sitio →](https://paulafoods.netlify.app/)**
 
-Proyecto final del curso de React de Coderhouse.
+![Inicio de Paula Foods](docs/inicio.jpg)
+
+![La tienda en el celular: inicio, menú y carrito](docs/celular.jpg)
+
+## El proyecto
+
+Empezó como proyecto final del curso de React de Coderhouse y hoy lo usa un emprendimiento real. Sobre esa base sumé:
+
+- **Panel de administración con login** para que la dueña cargue y edite sus comidas, con fotos que sube desde el celular.
+- **Seguridad con reglas de Firestore**: el catálogo es público, pero solo su cuenta puede modificarlo.
+- **Rediseño completo**, cálido y profesional, pensado primero para el celular.
+- **Pedido por WhatsApp** en lugar de un checkout: es como ya trabajaba el negocio y no necesita backend ni comisiones.
+
+| Menú con filtros por categoría | Detalle con galería de fotos |
+|---|---|
+| ![Menú](docs/menu.jpg) | ![Detalle de una comida](docs/detalle.jpg) |
 
 ## Funcionalidades
 
 - **Catálogo desde Firebase**: los productos se leen de Firestore.
 - **Categorías** (comida rápida, saludables, menú diario) con filtro por URL (`/categorias/:categoria`).
-- **Detalle de producto** (`/product/:id`) con selección de cantidad.
+- **Detalle de producto** (`/product/:id`) con galería de fotos (flechas, miniaturas y deslizamiento en el celular) y selección de cantidad.
 - **Carrito** global con React Context que se guarda en el navegador: agregar y quitar productos, cambiar cantidades, vaciarlo y ver el total. En el celular, una barra fija muestra el pedido en curso.
 - **Pedido por WhatsApp**: arma un mensaje con cada producto, cantidad, subtotal y el total, y abre WhatsApp listo para enviarlo.
 - **Panel de administración** (`/admin`) con login: la dueña edita sus comidas sin tocar código.
@@ -36,7 +51,7 @@ La protección no depende de esconder la página. La dan **Firebase Authenticati
 
 1. **Authentication** → Método de acceso → habilitar **Correo electrónico/contraseña**.
 2. **Authentication** → Usuarios → **Agregar usuario** con el email de la administradora. Copiar su **UID**.
-3. Reemplazar `UID_DE_LA_ADMINISTRADORA` en `firestore.rules` por ese UID.
+3. Poner ese UID en la función `esAdmin()` de `firestore.rules`.
 4. **Firestore Database** → **Reglas**: pegar el contenido de `firestore.rules` y **Publicar**.
 
 ## Tecnologías
