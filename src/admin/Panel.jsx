@@ -43,9 +43,9 @@ const ConfigWhatsApp = () => {
   };
 
   return (
-    <form onSubmit={guardar} className="card card-body shadow-sm mb-4">
+    <form onSubmit={guardar} className="panel-caja mb-4">
       <label className="form-label fw-semibold" htmlFor="whatsapp">
-        <i className="bi bi-whatsapp text-success"></i> WhatsApp para recibir pedidos
+        <i className="bi bi-whatsapp"></i> WhatsApp para recibir pedidos
       </label>
       <div className="input-group">
         <input
@@ -56,7 +56,7 @@ const ConfigWhatsApp = () => {
           onChange={(e) => setNumero(e.target.value)}
           placeholder="5493511234567"
         />
-        <button className="btn btn-success" type="submit">Guardar</button>
+        <button className="boton boton--primario admin-whatsapp__boton" type="submit">Guardar</button>
       </div>
       {estado.texto && <div className={`alert alert-${estado.tipo} py-2 mt-2 mb-0`}>{estado.texto}</div>}
     </form>
@@ -118,8 +118,8 @@ const Panel = () => {
   return (
     <>
       <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
-        <h2 className="mb-0">Mis comidas</h2>
-        <Link to="/admin/nuevo" className="btn btn-primary">
+        <h2 className="titulo-seccion mb-0">Mis comidas</h2>
+        <Link to="/admin/nuevo" className="boton boton--primario">
           <i className="bi bi-plus-lg"></i> Agregar comida
         </Link>
       </div>
@@ -134,7 +134,7 @@ const Panel = () => {
           const problemas = problemasDelProducto(p);
           const disponible = estaDisponible(p);
           return (
-            <div key={p.id} className={`card shadow-sm admin-item ${disponible ? '' : 'admin-item--pausado'}`}>
+            <div key={p.id} className={`admin-item ${disponible ? '' : 'admin-item--pausado'}`}>
               <img src={p.foto} alt={p.nombre} className="admin-item__foto" />
               <div className="admin-item__datos">
                 <strong>{p.nombre || 'Sin nombre'}</strong>
@@ -157,10 +157,10 @@ const Panel = () => {
                   />
                   <label className="form-check-label small" htmlFor={`disp-${p.id}`}>Disponible</label>
                 </div>
-                <Link to={`/admin/editar/${p.id}`} className="btn btn-outline-primary btn-sm">
+                <Link to={`/admin/editar/${p.id}`} className="boton boton--secundario boton--chico">
                   <i className="bi bi-pencil"></i> Editar
                 </Link>
-                <button className="btn btn-outline-danger btn-sm" onClick={() => borrar(p)}>
+                <button className="boton boton--peligro boton--chico" onClick={() => borrar(p)}>
                   <i className="bi bi-trash"></i> Borrar
                 </button>
               </div>

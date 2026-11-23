@@ -1,11 +1,14 @@
-import React from 'react'
-import {Link} from 'react-router-dom'
-const Error = () => {
-  return (
-    <div className='d-flex flex-column align-items-center justify-content-center'>
-        <h1 className='text-danger'> Error: no se encuentra la ruta!</h1>
-        <Link className='btn btn-dark' to='/'>Volver al Inicio</Link>
+import { Link } from 'react-router-dom';
+
+const Error = () => (
+  <div className="contenedor">
+    <div className="error-pagina">
+      <div className="error-pagina__numero">404</div>
+      <h1>No encontramos esta página</h1>
+      <p>Puede que el link esté mal escrito o que la página ya no exista.</p>
+      <Link to="/" className="boton boton--primario">Volver al inicio</Link>
     </div>
-  )
-}
-export default Error  
+  </div>
+);
+
+export default Error;

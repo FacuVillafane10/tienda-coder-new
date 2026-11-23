@@ -58,9 +58,9 @@ const Login = () => {
   };
 
   return (
-    <div className="container admin-login mt-5 mb-5">
-      <h2 className="mb-4 text-center">Administrar tienda</h2>
-      <form onSubmit={ingresar} className="card card-body shadow-sm">
+    <div className="contenedor seccion admin-login">
+      <h2 className="admin-login__titulo">Administrar tienda</h2>
+      <form onSubmit={ingresar} className="panel-caja">
         <label className="form-label" htmlFor="admin-email">Email</label>
         <input
           id="admin-email"
@@ -86,10 +86,10 @@ const Login = () => {
         {error && <div className="alert alert-danger py-2">{error}</div>}
         {aviso && <div className="alert alert-success py-2">{aviso}</div>}
 
-        <button type="submit" className="btn btn-primary w-100" disabled={enviando}>
+        <button type="submit" className="boton boton--primario boton--ancho" disabled={enviando}>
           {enviando ? 'Ingresando...' : 'Ingresar'}
         </button>
-        <button type="button" className="btn btn-link mt-2" onClick={recuperar}>
+        <button type="button" className="boton boton--fantasma boton--ancho mt-2" onClick={recuperar}>
           Olvidé mi contraseña
         </button>
       </form>

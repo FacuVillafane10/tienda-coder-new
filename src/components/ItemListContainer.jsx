@@ -1,94 +1,144 @@
-import { Link, useParams } from 'react-router-dom';
-import { useContext, useState, useEffect } from 'react';
-import { CartContext } from './CartContext';
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { Link, NavLink, useParams } from 'react-router-dom';
+import { useContext, useEffect, useState } from 'react';
+import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../assets/service/firebase';
-import { formatearPrecio, tienePrecio, estaDisponible } from '../utils/formato';
-import './ItemListContainer.css';
+import { CartContext } from './CartContext';
+import { CATEGORIAS, nombreCategoria } from '../utils/categorias';
+import { formatearPrecio, tienePrecio, estaDisponible, limpiarDescripcion } from '../utils/formato';
 
-function ItemListContainer({ message }) {
-  const { categoria } = useParams();  // Obtener el parámetro de la categoría desde la URL
-  const { addToCart } = useContext(CartContext);  // Accedemos a la función addToCart
-  const [productos, setProductos] = useState([]);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);  // Agregamos el estado loading
+const TarjetaCargando = () => (
+  <div className="tarjeta" aria-hidden="true">
+    <div className="esqueleto" style={{ aspectRatio: '4 / 3', borderRadius: 0 }} />
+    <div className="tarjeta__cuerpo">
+      <div className="esqueleto" style={{ height: 22, width: '70%' }} />
+      <div className="esqueleto" style={{ height: 14 }} />
+      <div className="esqueleto" style={{ height: 14, width: '85%' }} />
+      <div className="esqueleto" style={{ height: 38, marginTop: 12 }} />
+    </div>
+  </div>
+);
 
-  const handleAddToCart = (comida) => {
-    addToCart(comida);  // Llamamos a la función para agregar al carrito
+function Tarjeta({ comida }) {
+  const { addToCart } = useContext(CartContext);
+  const [agregado, setAgregado] = useState(false);
+
+  const agregar = () => {
+    addToCart(comida);
+    setAgregado(true);
+    setTimeout(() => setAgregado(false), 1400);
   };
 
+  return (
+    <article className="tarjeta">
+      <Link to={`/product/${comida.id}`} className="tarjeta__foto-link" tabIndex={-1} aria-hidden="true">
+        <img src={comida.foto} alt="" className="tarjeta__foto" loading="lazy" />
+        {comida.categoria && <span className="tarjeta__categoria">{nombreCategoria(comida.categoria)}</span>}
+      </Link>
+      <div className="tarjeta__cuerpo">
+        <h3 className="tarjeta__nombre">
+          <Link to={`/product/${comida.id}`}>{comida.nombre}</Link>
+        </h3>
+        <p className="tarjeta__descripcion">{limpiarDescripcion(comida.descripcion)}</p>
+        <div className="tarjeta__pie">
+          {tienePrecio(comida) ? <span className="precio">{formatearPrecio(comida.precio)}</span> : <span />}
+          <button
+            className={`boton boton--chico ${agregado ? 'boton--secundario' : 'boton--primario'}`}
+            onClick={agregar}
+            aria-label={`Agregar ${comida.nombre} al carrito`}
+          >
+            {agregado ? (
+              <><i className="bi bi-check-lg" aria-hidden="true"></i> Agregado</>
+            ) : (
+              <><i className="bi bi-plus-lg" aria-hidden="true"></i> Agregar</>
+            )}
+          </button>
+        </div>
+      </div>
+    </article>
+  );
+}
+
+function ItemListContainer() {
+  const { categoria } = useParams();
+  const [productos, setProductos] = useState([]);
+  const [error, setError] = useState(null);
+  const [cargando, setCargando] = useState(true);
+
   useEffect(() => {
-    const fetchProducts = async () => {
+    const obtenerProductos = async () => {
+      setCargando(true);
+      setError(null);
       try {
-        let productosQuery = collection(db, "productos");
-
-        // Filtrar productos según la categoría de la URL
+        let consulta = collection(db, 'productos');
         if (categoria) {
-          productosQuery = query(productosQuery, where("categoria", "==", categoria));  // Filtrar por la categoría
+          consulta = query(consulta, where('categoria', '==', categoria));
         }
-
-        const querySnapshot = await getDocs(productosQuery);
-        const productosData = querySnapshot.docs
-          .map((doc) => ({
-            id: doc.id,
-            ...doc.data(),
-          }))
-          .filter(estaDisponible);  // Las comidas pausadas desde el panel no se muestran
-
-        setProductos(productosData);
-      } catch (error) {
-        setError('Error al obtener productos');
-        console.error("Error obteniendo productos de Firebase: ", error);
+        const snapshot = await getDocs(consulta);
+        const lista = snapshot.docs
+          .map((doc) => ({ id: doc.id, ...doc.data() }))
+          .filter(estaDisponible) // Las comidas pausadas desde el panel no se muestran
+          .sort((a, b) => (a.nombre || '').localeCompare(b.nombre || '', 'es'));
+        setProductos(lista);
+      } catch (err) {
+        console.error('Error obteniendo productos de Firebase: ', err);
+        setError('No pudimos cargar el menú. Revisá tu conexión y volvé a intentar.');
       } finally {
-        setLoading(false);  // Una vez que los datos están listos, cambia el estado a false
+        setCargando(false);
       }
     };
 
-    fetchProducts();
-  }, [categoria]);  // Filtra nuevamente si la categoría cambia
+    obtenerProductos();
+  }, [categoria]);
 
-  if (loading) {
-    return <div className="text-center">Cargando...</div>;  // Mostrar "Cargando..." mientras se obtiene la data
-  }
-
-  if (error) return <p>{error}</p>;
+  const categoriaActual = CATEGORIAS.find((c) => c.clave === categoria);
 
   return (
-    <div className="container mt-4">
-      <h3 className="text-center mb-4 mt-4 text-black">{message}</h3>
-      <div className="row justify-content-center ">
-        {productos.length === 0 && <p>No se encontraron productos en esta categoría</p>}
-        {productos.map((comida) => (
-          <div key={comida.id} className="col-lg-3 col-md-4 col-sm-6 mb-4">
-            <div className="item-card shadow-lg rounded-3 p-3">
-              <img
-                src={comida.foto}
-                alt={comida.nombre}
-                className="img-fluid rounded-3 mb-3"
-              />
-              <h5 className="text-center">{comida.nombre}</h5>
-              {tienePrecio(comida) && (
-                <p className="text-center fw-bold fs-5 mb-2">{formatearPrecio(comida.precio)}</p>
-              )}
-              <p className="descripcion-producto text-muted">{comida.descripcion}</p>
-              <div className="d-flex justify-content-between">
-                <button
-                  className="btn btn-primary w-100"
-                  onClick={() => handleAddToCart(comida)}
-                >
-                  Agregar al carrito
-                </button>
-                <Link to={`/product/${comida.id}`} className="w-100 mt-2">
-                  <button className="btn btn-outline-secondary w-100">
-                    Ver más
-                  </button>
-                </Link>
-              </div>
-            </div>
+    <section id="menu" className="seccion">
+      <div className="contenedor">
+        <div className="menu__cabecera">
+          <div>
+            <span className="etiqueta-seccion">Nuestro menú</span>
+            <h2 className="titulo-seccion">{categoriaActual ? categoriaActual.nombre : 'Todas las comidas'}</h2>
           </div>
-        ))}
+          <nav className="filtros" aria-label="Categorías">
+            <NavLink to="/#menu" end className={({ isActive }) => `filtro ${isActive ? 'filtro--activo' : ''}`}>
+              Todas
+            </NavLink>
+            {CATEGORIAS.map((c) => (
+              <NavLink
+                key={c.clave}
+                to={`/categorias/${c.clave}`}
+                className={({ isActive }) => `filtro ${isActive ? 'filtro--activo' : ''}`}
+              >
+                {c.emoji} {c.nombre}
+              </NavLink>
+            ))}
+          </nav>
+        </div>
+
+        {error && (
+          <div className="vacio">
+            <div className="vacio__icono"><i className="bi bi-wifi-off" aria-hidden="true"></i></div>
+            <p>{error}</p>
+          </div>
+        )}
+
+        {!error && (
+          <div className="grilla">
+            {cargando
+              ? Array.from({ length: 6 }, (_, i) => <TarjetaCargando key={i} />)
+              : productos.map((comida) => <Tarjeta key={comida.id} comida={comida} />)}
+          </div>
+        )}
+
+        {!cargando && !error && productos.length === 0 && (
+          <div className="vacio">
+            <div className="vacio__icono"><i className="bi bi-basket" aria-hidden="true"></i></div>
+            <p>Por ahora no hay comidas en esta categoría.</p>
+          </div>
+        )}
       </div>
-    </div>
+    </section>
   );
 }
 

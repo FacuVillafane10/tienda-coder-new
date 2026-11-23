@@ -1,26 +1,20 @@
 import { useContext, useEffect, useState } from 'react';
-import { CartContext } from './CartContext';
 import { Link } from 'react-router-dom';
+import { CartContext } from './CartContext';
 import { formatearPrecio } from '../utils/formato';
 import { WHATSAPP_POR_DEFECTO, obtenerWhatsApp } from '../utils/config';
 
-const armarMensajePedido = (cart, totalPrice) => {
+const armarMensajePedido = (cart, total) => {
   const lineas = cart.map((item) => {
     const cantidad = item.quantity || 1;
     return `• ${cantidad} x ${item.nombre}: ${formatearPrecio((item.precio || 0) * cantidad)}`;
   });
 
-  return [
-    '¡Hola! Quiero hacer el siguiente pedido:',
-    '',
-    ...lineas,
-    '',
-    `Total: ${formatearPrecio(totalPrice)}`,
-  ].join('\n');
+  return ['¡Hola! Quiero hacer el siguiente pedido:', '', ...lineas, '', `Total: ${formatearPrecio(total)}`].join('\n');
 };
 
 const CartWidget = () => {
-  const { cart, removeFromCart, clearCart, updateQuantity } = useContext(CartContext);
+  const { cart, removeFromCart, clearCart, updateQuantity, getCartCount, getCartTotal } = useContext(CartContext);
   // Se busca al abrir el carrito (no al tocar el botón) para que el celular no bloquee la ventana de WhatsApp
   const [numeroWhatsApp, setNumeroWhatsApp] = useState(WHATSAPP_POR_DEFECTO);
 
@@ -28,118 +22,98 @@ const CartWidget = () => {
     obtenerWhatsApp().then(setNumeroWhatsApp);
   }, []);
 
-  const totalItems = cart.reduce((total, item) => total + (item.quantity || 1), 0);
-  const totalPrice = cart.reduce((total, item) => {
-    const price = item.precio || 0;
-    const quantity = item.quantity || 1;
-    return total + (price * quantity);
-  }, 0);
+  const totalItems = getCartCount();
+  const total = getCartTotal();
 
   const enviarPedido = () => {
-    if (cart.length === 0) {
-      return;
-    }
-
-    const mensaje = encodeURIComponent(armarMensajePedido(cart, totalPrice));
+    if (cart.length === 0) return;
+    const mensaje = encodeURIComponent(armarMensajePedido(cart, total));
     window.open(`https://wa.me/${numeroWhatsApp}?text=${mensaje}`, '_blank', 'noopener');
   };
 
+  const vaciar = () => {
+    if (window.confirm('¿Vaciar el carrito?')) clearCart();
+  };
+
+  if (cart.length === 0) {
+    return (
+      <div className="contenedor">
+        <div className="error-pagina">
+          <div className="error-pagina__numero"><i className="bi bi-bag" aria-hidden="true"></i></div>
+          <h1>Tu carrito está vacío</h1>
+          <p>Elegí tus comidas del menú y armá tu pedido.</p>
+          <Link to="/#menu" className="boton boton--primario">Ver el menú</Link>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="container mt-4">
-      <h2 className="mb-4">Carrito de Compras</h2>
+    <div className="contenedor seccion">
+      <Link to="/#menu" className="volver">
+        <i className="bi bi-arrow-left" aria-hidden="true"></i> Seguir comprando
+      </Link>
+      <h1 className="carrito__titulo">Tu pedido</h1>
 
-      {cart.length === 0 ? (
-        <div className="text-center my-5">
-          <p className="mb-3">Tu carrito está vacío.</p>
-          <Link to="/" className="btn btn-primary">
-            <i className="bi bi-arrow-left"></i> Ver productos
-          </Link>
-        </div>
-      ) : (
-        <div className="row">
-          <div className="col-md-8">
-            {cart.map((producto) => (
-              <div key={producto.id} className="card mb-3">
-                <div className="row g-0">
-                  <div className="col-md-3">
-                    <img
-                      src={producto.foto}
-                      className="img-fluid rounded-start container-fluid"
-                      alt={producto.nombre}
-                      style={{ height: '150px', objectFit: 'cover' }}
-                    />
-                  </div>
-                  <div className="col-md-9">
-                    <div className="card-body">
-                      <div className="d-flex justify-content-between align-items-start">
-                        <div>
-                          <h5 className="card-title">{producto.nombre}</h5>
-                          <p className="card-text text-muted small">{producto.descripcion}</p>
-                        </div>
-                        <button
-                          className="btn btn-danger btn-sm"
-                          onClick={() => removeFromCart(producto.id)}
-                          aria-label={`Eliminar ${producto.nombre}`}
-                        >
-                          <i className="bi bi-trash"></i> Eliminar
-                        </button>
-                      </div>
-
-                      <div className="d-flex align-items-center mt-2">
-                        <label className="me-2">Cantidad:</label>
-                        <div className="btn-group" role="group">
-                          <button
-                            className="btn btn-outline-dark btn-sm"
-                            onClick={() => updateQuantity(producto.id, -1)}
-                            disabled={(producto.quantity || 1) <= 1}
-                          >
-                            <i className="bi bi-dash-lg text-dark "></i>
-                          </button>
-                          <span className="btn btn-outline-dark btn-sm ">{producto.quantity || 1}</span>
-                          <button
-                            className="btn btn-outline-dark btn-sm text-black"
-                            onClick={() => updateQuantity(producto.id, 1)}
-                          >
-                            <i className="bi bi-plus-lg text-black"></i>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
+      <div className="carrito">
+        <ul className="carrito__lista" style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+          {cart.map((producto) => {
+            const cantidad = producto.quantity || 1;
+            return (
+              <li key={producto.id} className="linea">
+                <img src={producto.foto} alt="" className="linea__foto" />
+                <div className="linea__datos">
+                  <h2 className="linea__nombre">{producto.nombre}</h2>
+                  <span className="linea__precio-unitario">{formatearPrecio(producto.precio)} c/u</span>
+                  <div className="cantidad" role="group" aria-label={`Cantidad de ${producto.nombre}`}>
+                    <button
+                      className="boton-icono"
+                      onClick={() => updateQuantity(producto.id, -1)}
+                      disabled={cantidad <= 1}
+                      aria-label="Restar uno"
+                    >
+                      <i className="bi bi-dash-lg" aria-hidden="true"></i>
+                    </button>
+                    <span className="cantidad__valor">{cantidad}</span>
+                    <button className="boton-icono" onClick={() => updateQuantity(producto.id, 1)} aria-label="Sumar uno">
+                      <i className="bi bi-plus-lg" aria-hidden="true"></i>
+                    </button>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="col-md-4">
-            <div className="card sticky-top" style={{ top: '20px' }}>
-              <div className="card-body">
-                <h5 className="card-title">Resumen del pedido</h5>
-                <hr />
-                <div className="d-flex justify-content-between mb-2">
-                  <span>Total de productos:</span>
-                  <strong>{totalItems}</strong>
+                <div className="linea__lado">
+                  <span className="linea__subtotal">{formatearPrecio((producto.precio || 0) * cantidad)}</span>
+                  <button
+                    className="boton boton--fantasma boton--chico"
+                    onClick={() => removeFromCart(producto.id)}
+                    aria-label={`Quitar ${producto.nombre}`}
+                  >
+                    <i className="bi bi-trash3" aria-hidden="true"></i> Quitar
+                  </button>
                 </div>
+              </li>
+            );
+          })}
+        </ul>
 
-                <div className="d-flex justify-content-between mb-3">
-                  <span>Total:</span>
-                  <strong>{formatearPrecio(totalPrice)}</strong>
-                </div>
-
-                <button className="btn btn-success w-100 mb-2" onClick={enviarPedido}>
-                  <i className="bi bi-whatsapp"></i> Enviar pedido por WhatsApp
-                </button>
-                <button className="btn btn-outline-danger w-100 mb-2" onClick={clearCart}>
-                  <i className="bi bi-trash"></i> Vaciar carrito
-                </button>
-                <Link to="/" className="btn btn-outline-primary w-100">
-                  <i className="bi bi-arrow-left"></i> Seguir comprando
-                </Link>
-              </div>
-            </div>
+        <aside className="resumen">
+          <h2>Resumen</h2>
+          <div className="resumen__fila">
+            <span>Productos</span>
+            <span>{totalItems}</span>
           </div>
-        </div>
-      )}
+          <div className="resumen__total">
+            <span>Total</span>
+            <span className="precio">{formatearPrecio(total)}</span>
+          </div>
+          <button className="boton boton--whatsapp boton--ancho" onClick={enviarPedido}>
+            <i className="bi bi-whatsapp" aria-hidden="true"></i> Enviar pedido por WhatsApp
+          </button>
+          <p className="resumen__nota">Se abre WhatsApp con tu pedido listo para enviar. Ahí coordinamos la entrega y el pago.</p>
+          <button className="boton boton--fantasma boton--chico" onClick={vaciar}>
+            Vaciar carrito
+          </button>
+        </aside>
+      </div>
     </div>
   );
 };

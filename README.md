@@ -11,7 +11,7 @@ Proyecto final del curso de React de Coderhouse.
 - **Catálogo desde Firebase**: los productos se leen de Firestore.
 - **Categorías** (comida rápida, saludables, menú diario) con filtro por URL (`/categorias/:categoria`).
 - **Detalle de producto** (`/product/:id`) con selección de cantidad.
-- **Carrito** global con React Context: agregar y quitar productos, cambiar cantidades, vaciarlo y ver el total.
+- **Carrito** global con React Context que se guarda en el navegador: agregar y quitar productos, cambiar cantidades, vaciarlo y ver el total. En el celular, una barra fija muestra el pedido en curso.
 - **Pedido por WhatsApp**: arma un mensaje con cada producto, cantidad, subtotal y el total, y abre WhatsApp listo para enviarlo.
 - **Panel de administración** (`/admin`) con login: la dueña edita sus comidas sin tocar código.
 - Página "Nosotros" y página de error para rutas inexistentes.
@@ -43,7 +43,7 @@ La protección no depende de esconder la página. La dan **Firebase Authenticati
 - **React 18** con **Vite** y TypeScript configurado
 - **React Router** para la navegación
 - **Firebase**: Firestore como base de datos y Authentication para el panel
-- **React Bootstrap**, Bootstrap Icons y Font Awesome para la interfaz
+- Diseño propio en CSS (`src/styles/tema.css`) con tipografías Fraunces y DM Sans; Bootstrap solo para formularios del panel y Bootstrap Icons
 
 ## Cómo correrlo
 

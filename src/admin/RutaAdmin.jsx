@@ -13,7 +13,7 @@ const RutaAdmin = () => {
   useEffect(() => onAuthStateChanged(auth, setUsuario), []);
 
   if (usuario === undefined) {
-    return <div className="container mt-5 text-center">Cargando...</div>;
+    return <div className="contenedor seccion text-center">Cargando...</div>;
   }
 
   if (!usuario) {
@@ -21,10 +21,10 @@ const RutaAdmin = () => {
   }
 
   return (
-    <div className="container admin mt-4 mb-5">
+    <div className="contenedor seccion admin">
       <div className="admin-barra">
         <span className="text-muted small text-truncate">Sesión: {usuario.email}</span>
-        <button className="btn btn-outline-secondary btn-sm" onClick={() => signOut(auth)}>
+        <button className="boton boton--secundario boton--chico" onClick={() => signOut(auth)}>
           <i className="bi bi-box-arrow-right"></i> Cerrar sesión
         </button>
       </div>

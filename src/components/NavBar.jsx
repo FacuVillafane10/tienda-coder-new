@@ -1,82 +1,43 @@
-import React, { useContext } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useContext } from 'react';
+import { Link, NavLink } from 'react-router-dom';
 import { CartContext } from './CartContext';
-import { CATEGORIAS } from '../utils/categorias';
-import './NavBar.css';
+
+const claseLink = ({ isActive }) => `barra__link ${isActive ? 'barra__link--activo' : ''}`;
 
 function NavBar() {
-  const location = useLocation();
-  const { cart } = useContext(CartContext);
-
-  const totalItems = cart.reduce((total, item) => total + (item.quantity || 1), 0);
-
-  const isActive = (path) => location.pathname === path;
-  const isCategoryActive = location.pathname.startsWith('/categorias');
+  const { getCartCount } = useContext(CartContext);
+  const cantidad = getCartCount();
 
   return (
-    <nav className="pf-navbar">
-      <div className="pf-navbar__top">
-        <Link to="/" className="pf-navbar__logo-link" aria-label="Ir al inicio">
-          <img
-            src="/logoPau.ico"
-            alt="Paula Foods Logo"
-            className="pf-navbar__logo"
-          />
+    <header className="barra">
+      <div className="contenedor barra__interior">
+        <Link to="/" className="barra__marca" aria-label="Paula Foods, ir al inicio">
+          <img src="/logoPau.jpeg" alt="" className="barra__logo" />
+          <span className="barra__nombre">Paula Foods</span>
         </Link>
 
-        <div className="pf-navbar__actions">
-          <Link to="/cart" className="pf-cart-btn" aria-label="Ir al carrito de compras">
-            <i className="bi bi-cart3"></i>
-            <span>Carrito</span>
-            {totalItems > 0 && <span className="pf-cart-badge">{totalItems}</span>}
+        <nav className="barra__links" aria-label="Principal">
+          <NavLink to="/" end className={(p) => `${claseLink(p)} barra__link--ocultable`}>
+            Inicio
+          </NavLink>
+          <Link to="/#menu" className="barra__link">
+            Menú
           </Link>
-        </div>
-      </div>
-
-      <div className="pf-navbar__links">
-        <Link
-          to="/"
-          className={`pf-nav-link ${isActive('/') ? 'pf-nav-link--active' : ''}`}
-          aria-label="Ir a la página de inicio"
-        >
-          <i className="bi bi-house-door-fill"></i>
-          <span>Inicio</span>
-        </Link>
-
-        <div className="dropdown pf-dropdown">
-          <button
-            className={`pf-nav-link pf-nav-link--button dropdown-toggle ${
-              isCategoryActive ? 'pf-nav-link--active' : ''
-            }`}
-            type="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-            aria-label="Abrir menú de categorías"
+          <NavLink to="/nosotros" className={claseLink}>
+            Nosotros
+          </NavLink>
+          <Link
+            to="/cart"
+            className="boton boton--primario boton--chico barra__carrito"
+            aria-label={`Carrito, ${cantidad} ${cantidad === 1 ? 'producto' : 'productos'}`}
           >
-            <span>Categorías</span>
-          </button>
-
-          <ul className="dropdown-menu pf-dropdown-menu">
-            {CATEGORIAS.map((c) => (
-              <li key={c.clave}>
-                <Link className="dropdown-item pf-dropdown-item" to={`/categorias/${c.clave}`}>
-                  {c.emoji} {c.nombre}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <Link
-          to="/nosotros"
-          className={`pf-nav-link ${isActive('/nosotros') ? 'pf-nav-link--active' : ''}`}
-          aria-label="Ir a la sección de nosotros"
-        >
-          <i className="bi bi-person-circle"></i>
-          <span>Nosotros</span>
-        </Link>
+            <i className="bi bi-bag" aria-hidden="true"></i>
+            <span className="barra__link--ocultable">Carrito</span>
+            {cantidad > 0 && <span className="contador">{cantidad}</span>}
+          </Link>
+        </nav>
       </div>
-    </nav>
+    </header>
   );
 }
 

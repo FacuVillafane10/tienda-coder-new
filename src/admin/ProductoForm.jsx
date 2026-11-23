@@ -99,7 +99,7 @@ const ProductoForm = () => {
         ) : (
           <div className="admin-form__foto admin-form__foto--vacia mb-2">Sin foto</div>
         )}
-        <label className={`btn btn-outline-primary w-100 ${procesandoFoto ? 'disabled' : ''}`}>
+        <label className={`boton boton--secundario boton--ancho ${procesandoFoto ? "boton--deshabilitado" : ""}`}>
           <i className="bi bi-camera"></i> {procesandoFoto ? 'Procesando foto...' : producto.foto ? 'Cambiar foto' : 'Elegir foto'}
           <input type="file" accept="image/*" hidden onChange={elegirFoto} disabled={procesandoFoto} />
         </label>
@@ -177,10 +177,10 @@ const ProductoForm = () => {
       )}
 
       <div className="d-flex gap-2">
-        <button type="submit" className="btn btn-success flex-grow-1" disabled={guardando || procesandoFoto}>
+        <button type="submit" className="boton boton--primario flex-grow-1" disabled={guardando || procesandoFoto}>
           {guardando ? 'Guardando...' : 'Guardar'}
         </button>
-        <Link to="/admin" className="btn btn-outline-secondary">Cancelar</Link>
+        <Link to="/admin" className="boton boton--secundario">Cancelar</Link>
       </div>
     </form>
   );
