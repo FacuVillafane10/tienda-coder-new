@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { CartContext } from './CartContext';
 import { Link } from 'react-router-dom';
 
-const NUMERO_WHATSAPP = '5493518084765';
+const NUMERO_WHATSAPP = '5493512417327';
 
 const formatearPrecio = (valor) => `$${valor.toLocaleString('es-AR')}`;
 
