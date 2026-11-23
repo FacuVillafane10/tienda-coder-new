@@ -1,10 +1,28 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { CartContext } from './CartContext';
 import { Link } from 'react-router-dom';
 
+const NUMERO_WHATSAPP = '5493518084765';
+
+const formatearPrecio = (valor) => `$${valor.toLocaleString('es-AR')}`;
+
+const armarMensajePedido = (cart, totalPrice) => {
+  const lineas = cart.map((item) => {
+    const cantidad = item.quantity || 1;
+    return `• ${cantidad} x ${item.nombre}: ${formatearPrecio((item.precio || 0) * cantidad)}`;
+  });
+
+  return [
+    '¡Hola! Quiero hacer el siguiente pedido:',
+    '',
+    ...lineas,
+    '',
+    `Total: ${formatearPrecio(totalPrice)}`,
+  ].join('\n');
+};
+
 const CartWidget = () => {
   const { cart, removeFromCart, clearCart, updateQuantity } = useContext(CartContext);
-  const [paymentSuccess, setPaymentSuccess] = useState(false);
 
   const totalItems = cart.reduce((total, item) => total + (item.quantity || 1), 0);
   const totalPrice = cart.reduce((total, item) => {
@@ -13,50 +31,27 @@ const CartWidget = () => {
     return total + (price * quantity);
   }, 0);
 
-  const handleCheckout = async () => {
+  const enviarPedido = () => {
     if (cart.length === 0) {
       return;
     }
 
-    // Llamar a tu backend para crear la preferencia de pago
-    const response = await fetch('/create_preference', {
-      method: 'POST',
-      body: JSON.stringify({ items: cart }), // Mandamos los productos en el carrito
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
-    const preference = await response.json();
-
-    // Mercado Pago configurado en el frontend
-    const mp = new window.MercadoPago('TU_PUBLIC_KEY');  // Usar tu public key de MercadoPago
-
-    mp.checkout({
-      preference: {
-        id: preference.id,  // La preferencia creada por el backend
-      },
-      render: {
-        container: '.checkout-btn', // Contenedor del botón de pago
-        label: 'Pagar con Mercado Pago',
-      },
-    });
+    const mensaje = encodeURIComponent(armarMensajePedido(cart, totalPrice));
+    window.open(`https://wa.me/${NUMERO_WHATSAPP}?text=${mensaje}`, '_blank', 'noopener');
   };
 
   return (
     <div className="container mt-4">
       <h2 className="mb-4">Carrito de Compras</h2>
-      {paymentSuccess && (
-        <div className="alert alert-success text-center">
-          <h4>¡Pago realizado con éxito!</h4>
-          <p>Tu pedido ha sido procesado. Gracias por comprar con nosotros.</p>
+
+      {cart.length === 0 ? (
+        <div className="text-center my-5">
+          <p className="mb-3">Tu carrito está vacío.</p>
           <Link to="/" className="btn btn-primary">
-            <i className="bi bi-house-door"></i> Regresar al inicio
+            <i className="bi bi-arrow-left"></i> Ver productos
           </Link>
         </div>
-      )}
-
-      {!paymentSuccess && (
+      ) : (
         <div className="row">
           <div className="col-md-8">
             {cart.map((producto) => (
@@ -124,11 +119,11 @@ const CartWidget = () => {
 
                 <div className="d-flex justify-content-between mb-3">
                   <span>Total:</span>
-                  <strong>${totalPrice.toFixed(2)}</strong>
+                  <strong>{formatearPrecio(totalPrice)}</strong>
                 </div>
 
-                <button className="btn btn-success w-100 mb-2" onClick={handleCheckout}>
-                  <i className="bi bi-credit-card"></i> Proceder al pago
+                <button className="btn btn-success w-100 mb-2" onClick={enviarPedido}>
+                  <i className="bi bi-whatsapp"></i> Enviar pedido por WhatsApp
                 </button>
                 <button className="btn btn-outline-danger w-100 mb-2" onClick={clearCart}>
                   <i className="bi bi-trash"></i> Vaciar carrito
@@ -136,8 +131,6 @@ const CartWidget = () => {
                 <Link to="/" className="btn btn-outline-primary w-100">
                   <i className="bi bi-arrow-left"></i> Seguir comprando
                 </Link>
-
-                <div className="checkout-btn"></div> {/* Contenedor del botón de Mercado Pago */}
               </div>
             </div>
           </div>
