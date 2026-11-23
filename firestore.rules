@@ -8,7 +8,7 @@ service cloud.firestore {
 
     // UID de la cuenta administradora (Firebase → Authentication → Usuarios)
     function esAdmin() {
-      return request.auth != null && request.auth.uid == 'UID_DE_LA_ADMINISTRADORA';
+      return request.auth != null && request.auth.uid == 'v9UIBMrA1hQje69VQQ8UiRl8gdI3';
     }
 
     function productoValido() {
