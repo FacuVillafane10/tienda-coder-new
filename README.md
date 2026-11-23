@@ -1,30 +1,36 @@
-# React + TypeScript + Vite
+# Paula Foods · Tienda online de comida casera
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Tienda online para un emprendimiento de comida casera: catálogo por categorías, detalle de cada producto, carrito y envío del pedido por WhatsApp.
 
-Currently, two official plugins are available:
+**Ver sitio:** https://facuvillafane10.github.io/tienda-coder-new/
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Proyecto final del curso de React de Coderhouse.
 
-## Expanding the ESLint configuration
+## Funcionalidades
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **Catálogo desde Firebase**: los productos se leen de Firestore.
+- **Categorías** (comida rápida, saludables, menú diario) con filtro por URL (`/categorias/:categoria`).
+- **Detalle de producto** (`/product/:id`) con selección de cantidad.
+- **Carrito** global con React Context: agregar, quitar y ver el total.
+- **Pedido por WhatsApp**: el carrito arma un mensaje con el detalle de la compra listo para enviar.
+- Página "Nosotros" y página de error para rutas inexistentes.
 
-- Configure the top-level `parserOptions` property like this:
+## Tecnologías
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+- **React 18** con **Vite** y TypeScript configurado
+- **React Router** para la navegación
+- **Firebase / Firestore** como base de datos
+- **React Bootstrap**, Bootstrap Icons y Font Awesome para la interfaz
+
+## Cómo correrlo
+
+```bash
+npm install
+npm run dev
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+La app usa un proyecto de Firebase con una colección `productos`. Para usar otro proyecto, cambiar la configuración en `src/assets/service/firebase.jsx`.
+
+## Próximos pasos
+
+- Integrar el pago con Mercado Pago (está iniciado, falta el backend que crea la preferencia de pago).
