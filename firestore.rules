@@ -1,0 +1,44 @@
+rules_version = '2';
+
+// Reglas de seguridad de Firestore para Paula Foods.
+// Se publican copiando este archivo en Firebase → Firestore Database → Reglas → Publicar.
+// Todos pueden LEER el catálogo; solo la cuenta de la dueña puede MODIFICARLO.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // UID de la cuenta administradora (Firebase → Authentication → Usuarios)
+    function esAdmin() {
+      return request.auth != null && request.auth.uid == 'UID_DE_LA_ADMINISTRADORA';
+    }
+
+    function productoValido() {
+      let d = request.resource.data;
+      return d.keys().hasOnly(['nombre', 'descripcion', 'precio', 'categoria', 'foto', 'disponible'])
+        && d.nombre is string && d.nombre.size() > 0 && d.nombre.size() <= 80
+        && d.descripcion is string && d.descripcion.size() <= 600
+        && d.precio is number && d.precio > 0
+        && d.categoria in ['comidarapida', 'saludables', 'menudiario']
+        && d.foto is string && d.foto.size() > 0 && d.foto.size() < 900000
+        && d.disponible is bool;
+    }
+
+    match /productos/{id} {
+      allow read: if true;
+      allow create, update: if esAdmin() && productoValido();
+      allow delete: if esAdmin();
+    }
+
+    match /config/tienda {
+      allow read: if true;
+      allow write: if esAdmin()
+        && request.resource.data.keys().hasOnly(['whatsapp'])
+        && request.resource.data.whatsapp is string
+        && request.resource.data.whatsapp.matches('^[0-9]{10,15}$');
+    }
+
+    // Cualquier otra colección queda cerrada
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { CartContext } from './CartContext';
+import { CATEGORIAS } from '../utils/categorias';
 import './NavBar.css';
 
 function NavBar() {
@@ -56,21 +57,13 @@ function NavBar() {
           </button>
 
           <ul className="dropdown-menu pf-dropdown-menu">
-            <li>
-              <Link className="dropdown-item pf-dropdown-item" to="/categorias/comidarapida">
-                🍔 Comidas Rápidas
-              </Link>
-            </li>
-            <li>
-              <Link className="dropdown-item pf-dropdown-item" to="/categorias/saludables">
-                🥗 Saludables
-              </Link>
-            </li>
-            <li>
-              <Link className="dropdown-item pf-dropdown-item" to="/categorias/menudiario">
-                🍽️ Menú Diario
-              </Link>
-            </li>
+            {CATEGORIAS.map((c) => (
+              <li key={c.clave}>
+                <Link className="dropdown-item pf-dropdown-item" to={`/categorias/${c.clave}`}>
+                  {c.emoji} {c.nombre}
+                </Link>
+              </li>
+            ))}
           </ul>
         </div>
 

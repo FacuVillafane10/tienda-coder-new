@@ -2,7 +2,8 @@ import { useParams, Link } from 'react-router-dom';
 import { useContext, useState, useEffect } from 'react';
 import { CartContext } from './CartContext';
 import { doc, getDoc } from "firebase/firestore";
-import { db } from '../assets/service/firebase'; 
+import { db } from '../assets/service/firebase';
+import { formatearPrecio, tienePrecio, estaDisponible } from '../utils/formato';
 //import './ItemDetail.css'
 
 const ItemDetail = () => {
@@ -74,9 +75,10 @@ const ItemDetail = () => {
   }
 
   // Función para agregar al carrito
+  const disponible = estaDisponible(producto);
+
   const handleAddToCart = () => {
-    if (producto.stock && quantity > producto.stock) {
-      alert(`No podemos agregar más de ${producto.stock} unidades de este producto.`);
+    if (!disponible) {
       return;
     }
 
@@ -99,6 +101,12 @@ const ItemDetail = () => {
         </div>
         <div className="col-md-6">
           <h2 className="mb-3">{producto.nombre}</h2>
+          {tienePrecio(producto) && (
+            <p className="fs-3 fw-bold mb-3">{formatearPrecio(producto.precio)}</p>
+          )}
+          {!disponible && (
+            <div className="alert alert-warning">No disponible por ahora.</div>
+          )}
           <p className="lead">
             <strong>Descripción:</strong>
           </p>
@@ -130,6 +138,7 @@ const ItemDetail = () => {
             <button 
               className="btn btn-success"
               onClick={handleAddToCart}
+              disabled={!disponible}
             >
               Agregar al carrito
             </button>

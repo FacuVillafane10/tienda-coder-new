@@ -1,10 +1,8 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { CartContext } from './CartContext';
 import { Link } from 'react-router-dom';
-
-const NUMERO_WHATSAPP = '5493512417327';
-
-const formatearPrecio = (valor) => `$${valor.toLocaleString('es-AR')}`;
+import { formatearPrecio } from '../utils/formato';
+import { WHATSAPP_POR_DEFECTO, obtenerWhatsApp } from '../utils/config';
 
 const armarMensajePedido = (cart, totalPrice) => {
   const lineas = cart.map((item) => {
@@ -23,6 +21,12 @@ const armarMensajePedido = (cart, totalPrice) => {
 
 const CartWidget = () => {
   const { cart, removeFromCart, clearCart, updateQuantity } = useContext(CartContext);
+  // Se busca al abrir el carrito (no al tocar el botón) para que el celular no bloquee la ventana de WhatsApp
+  const [numeroWhatsApp, setNumeroWhatsApp] = useState(WHATSAPP_POR_DEFECTO);
+
+  useEffect(() => {
+    obtenerWhatsApp().then(setNumeroWhatsApp);
+  }, []);
 
   const totalItems = cart.reduce((total, item) => total + (item.quantity || 1), 0);
   const totalPrice = cart.reduce((total, item) => {
@@ -37,7 +41,7 @@ const CartWidget = () => {
     }
 
     const mensaje = encodeURIComponent(armarMensajePedido(cart, totalPrice));
-    window.open(`https://wa.me/${NUMERO_WHATSAPP}?text=${mensaje}`, '_blank', 'noopener');
+    window.open(`https://wa.me/${numeroWhatsApp}?text=${mensaje}`, '_blank', 'noopener');
   };
 
   return (

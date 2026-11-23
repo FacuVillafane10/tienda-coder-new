@@ -3,6 +3,7 @@ import { useContext, useState, useEffect } from 'react';
 import { CartContext } from './CartContext';
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from '../assets/service/firebase';
+import { formatearPrecio, tienePrecio, estaDisponible } from '../utils/formato';
 import './ItemListContainer.css';
 
 function ItemListContainer({ message }) {
@@ -27,10 +28,12 @@ function ItemListContainer({ message }) {
         }
 
         const querySnapshot = await getDocs(productosQuery);
-        const productosData = querySnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
+        const productosData = querySnapshot.docs
+          .map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }))
+          .filter(estaDisponible);  // Las comidas pausadas desde el panel no se muestran
 
         setProductos(productosData);
       } catch (error) {
@@ -64,6 +67,9 @@ function ItemListContainer({ message }) {
                 className="img-fluid rounded-3 mb-3"
               />
               <h5 className="text-center">{comida.nombre}</h5>
+              {tienePrecio(comida) && (
+                <p className="text-center fw-bold fs-5 mb-2">{formatearPrecio(comida.precio)}</p>
+              )}
               <p className="descripcion-producto text-muted">{comida.descripcion}</p>
               <div className="d-flex justify-content-between">
                 <button
