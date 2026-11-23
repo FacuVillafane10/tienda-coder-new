@@ -1,8 +1,8 @@
 # Paula Foods · Tienda online de comida casera
 
-Tienda online para un emprendimiento de comida casera: catálogo por categorías, detalle de cada producto, carrito y envío del pedido por WhatsApp.
+Tienda online para un emprendimiento de comida casera: catálogo por categorías, detalle de cada producto y carrito de compras.
 
-**Ver sitio:** https://facuvillafane10.github.io/tienda-coder-new/
+**Ver sitio:** https://paulafoods.netlify.app/
 
 Proyecto final del curso de React de Coderhouse.
 
@@ -11,8 +11,7 @@ Proyecto final del curso de React de Coderhouse.
 - **Catálogo desde Firebase**: los productos se leen de Firestore.
 - **Categorías** (comida rápida, saludables, menú diario) con filtro por URL (`/categorias/:categoria`).
 - **Detalle de producto** (`/product/:id`) con selección de cantidad.
-- **Carrito** global con React Context: agregar, quitar y ver el total.
-- **Pedido por WhatsApp**: el carrito arma un mensaje con el detalle de la compra listo para enviar.
+- **Carrito** global con React Context: agregar y quitar productos, cambiar cantidades, vaciarlo y ver el total.
 - Página "Nosotros" y página de error para rutas inexistentes.
 
 ## Tecnologías
